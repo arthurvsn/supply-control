@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from '../_models/user';
 
@@ -10,6 +10,8 @@ import { User } from '../_models/user';
 export class UserService {
     
     urlApi = 'http://localhost:8000/api';
+    isLogged = false;
+    user: User;
     
     constructor(private http: HttpClient) { }
     
@@ -23,6 +25,7 @@ export class UserService {
 
                 // login successful if there's a jwt token in the response
                 if (res.message.type == "S") {
+                    this.isLogged = true;
                     let token = res.dataset.token;
                     let username = res.dataset.user.username;
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
@@ -35,5 +38,28 @@ export class UserService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+    }
+
+    getIsLogged() {
+        if(localStorage.getItem('currentUser') != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    getUserLogged() {
+        if (localStorage.getItem('currentUser')) {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            var headers = new HttpHeaders().set('token', user.token);
+            //headers.append('token', user.token);
+            var options = {
+                headers: headers
+            };
+
+            return this.http.get<any>(this.urlApi + '/getAuthUser', options);
+            
+        }
     }
 }

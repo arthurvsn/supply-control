@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 			.pipe(first())
 			.subscribe(				
 				data => {
-					if(data.message.type == "S") {						
+					if(data.message.type == "S") {
 						this.router.navigate([this.returnUrl]);
 					} else if (data.message.type == "N") {
 						this.error = data.message.text;	
