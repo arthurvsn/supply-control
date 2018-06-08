@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+            <h1>Home</h1>
+            <div *ngIf="user; else default">
+                <p>Welcome Fulano {{ user.name }}</p>
+            </div>
+            <ng-template #default>
+                <p>To do login for the options </p>
+            </ng-template>
+            <div>
+                Users from secure api end point:
+                <ul>
+                    <li *ngFor="let user of users">{{user.name}} {{user.username}}</li>
+                </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
