@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -27,18 +28,18 @@ export class HomeComponent implements OnInit {
 			.subscribe(users => {
 				this.users = users.dataset.user;
 		});
-		
+
+			this.getUserLogged();
+	}
+	  
+	getUserLogged(): void {
 		this.userService.getUserLogged()
-			.pipe(first())
-			.subscribe(user => {
-				if (user.message.type == "S") {
-					this.user = user.dataset.user;
-					this.isLogged = true;
-				} else {
-					this.isLogged = false;
-					this.router.navigate(["/login"])
+			.subscribe(data => {
+				if (data.message.type == "S") {
+					this.user = data.dataset.user;
 				}
-			});
-		
-  	}
+			},
+			error => console.log(error)
+		);
+	}
 }

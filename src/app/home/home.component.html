@@ -3,10 +3,10 @@
 		<div class="col-12">
             <h1>Home</h1>
             <div *ngIf="user; else default">
-                <p>Welcome Fulano {{ user.name }}</p>
+                <p>Welcome {{ user.name }}</p>
             </div>
             <ng-template #default>
-                <p>To do login for the options </p>
+                <p>Log in to see the options</p>
             </ng-template>
             <div>
                 Users from secure api end point:

@@ -11,7 +11,7 @@ import { UserService } from './_services/user.service';
 export class AppComponent {
 
 	title = 'Supply Control';
-	isLogged: boolean;
+	isLogged: any;
 	returnUrl = '/home';
 
 	constructor(private userService: UserService, 
@@ -19,7 +19,11 @@ export class AppComponent {
 		private router: Router,) { }
 
 	ngOnInit() {
-		this.isLogged = this.userService.getIsLogged();
+		this.userService.getUserLogged().subscribe(data => {
+			this.isLogged = data.message.type == "S" ? true : false
+		},
+			error => console.log(error)
+		);
 		this.router.navigate([this.returnUrl]);
 	}
 }
