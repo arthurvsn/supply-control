@@ -12,7 +12,7 @@ export class AppComponent {
 
 	title = 'Supply Control';
 	isLogged: any;
-	returnUrl = '/register';
+	returnUrl = '/';
 
 	constructor(private userService: UserService, 
 		private route: ActivatedRoute,
@@ -20,10 +20,17 @@ export class AppComponent {
 
 	ngOnInit() {
 		this.userService.getUserLogged().subscribe(data => {
-			this.isLogged = data.message.type == "S" ? true : false
+			console.log(data);
+			if(data.message.type == "S") {
+				this.isLogged = true;
+				this.router.navigate(['/dashboard']);
+			} else {
+				this.router.navigate(['/login']);
+			}
 		},
 			error => console.log(error)
-		);
-		this.router.navigate([this.returnUrl]);
+		);	
+		
+		
 	}
 }

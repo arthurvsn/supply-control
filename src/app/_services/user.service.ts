@@ -36,7 +36,7 @@ export class UserService {
         var options = {
             headers: headers
         };
-        console.log(this.token);
+        
         return this.http.get<any>(this.urlApi + '/getAuthUser', options)
         //return this.http.get<any>(this.urlApi + '/getAuthUser', this.options)
             .map((response: any) => {
