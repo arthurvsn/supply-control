@@ -42,4 +42,8 @@ export class HomeComponent implements OnInit {
 			error => console.log(error)
 		);
 	}
+
+	getInfoCar(id: number) {
+		alert(id);
+	}
 }

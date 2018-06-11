@@ -12,7 +12,7 @@ export class AppComponent {
 
 	title = 'Supply Control';
 	isLogged: any;
-	returnUrl = '/home';
+	returnUrl = '/register';
 
 	constructor(private userService: UserService, 
 		private route: ActivatedRoute,
