@@ -6,16 +6,19 @@
 					<div class="bg-light p-4">
 						<h5> {{ title }}</h5>
 						<ul class="navbar-nav">				
-							<li *ngIf="!isLogged; else logout" class="nav-item">
-								<a class="nav-link" routerLink="/login">Login</a>
+							<li *ngIf="!isLogged; else logged" class="nav-item">
+								<a class="nav-link" href="/login">Login</a>
 								<a class="nav-link" routerLink="/register">Register</a>
 							</li>
-							<ng-template #logout>
+							<ng-template #logged>
 								<li class="nav-item active">
-									<a class="nav-link" routerLink="/dashboard">Dashboard</a>
+									<a class="nav-link" href="/dashboard">Dashboard</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" routerLink="/login">Logout</a>
+									<a class="nav-link" routerLink="/profile">Profile</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/login">Logout</a>
 								</li>
 							</ng-template>
 							<li class="nav-item">

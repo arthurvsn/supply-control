@@ -20,7 +20,6 @@ export class AppComponent {
 
 	ngOnInit() {
 		this.userService.getUserLogged().subscribe(data => {
-			console.log(data);
 			if(data.message.type == "S") {
 				this.isLogged = true;
 				this.router.navigate(['/dashboard']);
@@ -28,7 +27,7 @@ export class AppComponent {
 				this.router.navigate(['/login']);
 			}
 		},
-			error => console.log(error)
+			error => console.log("Error: " + error)
 		);	
 		
 		
