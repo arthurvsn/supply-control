@@ -19,17 +19,18 @@ export class AppComponent {
 		private router: Router,) { }
 
 	ngOnInit() {
-		this.userService.getUserLogged().subscribe(data => {
-			if(data.message.type == "S") {
-				this.isLogged = true;
-				this.router.navigate(['/dashboard']);
-			} else {
-				this.router.navigate(['/login']);
-			}
-		},
-			error => console.log("Error: " + error)
-		);	
 		
-		
+		if (this.userService.getUserLogged()) {
+			this.isLogged = true;
+			this.returnUrl = '/dashboard';
+		} else {
+			this.isLogged = false;
+			this.returnUrl = '/login';
+		}
+		this.router.navigate([this.returnUrl]);		
+	}
+
+	logout() {
+		this.router.navigate(['login']);
 	}
 }

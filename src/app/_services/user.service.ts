@@ -30,19 +30,16 @@ export class UserService {
         return this.http.get<any>(this.urlApi + '/user');
     }
 
-    getUserLogged(): Observable<any> {
-        
-        var headers = new HttpHeaders().set('token', this.token);
-        //headers.append('token', user.token);
-        var options = {
-            headers: headers
-        };
-        
-        return this.http.get<any>(this.urlApi + '/getAuthUser', options)
-        //return this.http.get<any>(this.urlApi + '/getAuthUser', this.options)
-            .map((response: any) => {
-                return response;
-            }).catch(this.handleError);
+    getUserLogged(): any {        
+        if (localStorage.getItem('currentUser')) {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            this.user = user.user;
+
+            return this.user;
+        } else {
+            return false;
+        }
     }
 
     private handleError(error: any) {

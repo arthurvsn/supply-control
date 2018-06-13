@@ -2,8 +2,56 @@
 	<div class="row">
 		<div class="col-12">
 			<p>
-				Your profile!
+				About us!
 			</p>
+			<h3>Contact</h3><div class="form-group">
+				<label for="name">Name:</label>
+				<input type="name" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" />
+			</div>
+			<div>
+				<div>
+					<label>Message: </label>
+				</div>
+				<div>
+					<textarea rows="10" cols="40" [disabled]="sending"></textarea>
+				</div>
+			</div>
+			<p *ngIf="!sending">
+				<button class="btn btn-success" (click)="send()">Send</button>
+			</p>
+			
+			<div *ngIf="details">
+				{{ details }}
+			</div>
+			<form [formGroup]="contactForm">
+				<!-- <div class="form-group">
+					<label for="name">Name:</label>
+					<input type="name" formControlName="name" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" formControlName="email" class="form-control"/>
+				</div>
+				<div>
+					<div>
+						<label>Message: </label>
+					</div>
+					<div>
+						<textarea rows="10" cols="40" [disabled]="sending"></textarea>
+					</div>
+				</div>
+				<p *ngIf="!sending">
+					<button class="btn btn-success" (click)="send()">Send</button>
+				</p>
+
+				<div *ngIf="details">
+					{{ details }}
+				</div> -->
+			</form>
 		</div>
 	</div>
 </div>

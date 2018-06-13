@@ -5,7 +5,7 @@
 				<div class="collapse navbar-collapse" id="navbarToggleExternalContent">
 					<div class="bg-light p-4">
 						<h5> {{ title }}</h5>
-						<ul class="navbar-nav">				
+						<ul class="navbar-nav">
 							<li *ngIf="!isLogged; else logged" class="nav-item">
 								<a class="nav-link" href="/login">Login</a>
 								<a class="nav-link" routerLink="/register">Register</a>
@@ -18,7 +18,7 @@
 									<a class="nav-link" routerLink="/profile">Profile</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/login">Logout</a>
+									<a class="nav-link" (click)="logout()" routerLink="">Logout</a>
 								</li>
 							</ng-template>
 							<li class="nav-item">
@@ -28,12 +28,12 @@
 					</div>
 				</div>
 				<nav class="navbar navbar-light bg-light">
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" 
-					 aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+					 aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</nav>
-			</div>		
+			</div>
 		</div>
 	</div>
 </div>
