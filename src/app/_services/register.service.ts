@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 	}
 
 	saveNewUser(form: any) {
-		console.log(form.street.value);
 		
 		let objAdress = {
 			street: form.street.value,
@@ -24,6 +23,11 @@ import { Observable } from 'rxjs';
 			state: form.state.value,
 			zip_code: form.zipcode.value,
 			country: form.country.value,
+		};
+
+		let objPhone = {
+			country_code: form.code.value,
+			number: form.phone.value,
 		};
 
 		let body = {
@@ -37,10 +41,7 @@ import { Observable } from 'rxjs';
 				objAdress
 			],
 			phones: [
-				{
-					country_code: "56",
-					number: "998765432"
-				}
+				objPhone
 			]
 		};
 
@@ -51,6 +52,6 @@ import { Observable } from 'rxjs';
 				} else {
 					return false;
 				}
-			});
+		});
 	}
 }

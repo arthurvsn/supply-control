@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 	returnUrl = "/login";
 	submitted = false;
 	loading = false;
-	error: string;
+	error = '';
 
 	constructor(private formBuilder: FormBuilder,
 				private registerService: RegisterService,
@@ -36,6 +36,8 @@ export class RegisterComponent implements OnInit {
 			city: ['', Validators.required],
 			state: ['', Validators.required],
 			country: ['', Validators.required],
+			phone: ['', Validators.required],
+			code: ['', Validators.required],
 		});
 	}
 
@@ -60,7 +62,8 @@ export class RegisterComponent implements OnInit {
 					}
 				},
 				error => {
-					this.error = error;
+					this.error = error.message;
+					this.error = "Error on register";
 					this.loading = false;
 			});;
 	}
