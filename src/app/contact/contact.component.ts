@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-	selector: 'app-about',
-	templateUrl: './about.component.html',
-	styleUrls: ['./about.component.css']
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
 })
-export class AboutComponent implements OnInit {
-
+export class ContactComponent implements OnInit {
+	
 	contactForm: FormGroup;
 	constructor(private formBuilder: FormBuilder,
-				private router: Router) { }
+		private router: Router) { }
 
 	details: string;
 	sending = false;
@@ -20,7 +20,7 @@ export class AboutComponent implements OnInit {
 		this.contactForm = this.formBuilder.group({
 			name: ['', Validators.required],
 			email: ['', Validators.required],
-		});	
+		});
 	}
 
 	closePopup() {
@@ -34,6 +34,8 @@ export class AboutComponent implements OnInit {
 		setTimeout(() => {
 			this.sending = false;
 			this.closePopup();
+			this.details ='';
 		}, 1000);
 	}
+
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { tap, delay } from 'rxjs/operators';
 
 import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
@@ -21,24 +23,31 @@ export class HomeComponent implements OnInit {
 		private router: Router) { }
 
   	ngOnInit() {
-
-		this.userService.getAll()
+			
+		/* this.userService.getAll()
 			.pipe(first())
 			.subscribe(users => {
 				this.users = users.dataset.user;
-		});
+		}); */
+
+		this.getUserLogged();
+	}
+	  
+	getUserLogged(): void {
 		
-		this.userService.getUserLogged()
-			.pipe(first())
-			.subscribe(user => {
-				if (user.message.type == "S") {
-					this.user = user.dataset.user;
-					this.isLogged = true;
-				} else {
-					this.isLogged = false;
-					this.router.navigate(["/login"])
+		this.user = this.userService.getUserLogged();
+		/* this.userService.getUserLogged()
+			.subscribe(data => {
+				
+				if (data.message.type == "S") {
+					this.user = data.dataset.user;
 				}
-			});
-		
-  	}
+			},
+			error => console.log(error)
+		); */
+	}
+
+	getInfoCar(id: number) {
+		alert(id);
+	}
 }

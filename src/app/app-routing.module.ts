@@ -5,15 +5,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
+import { RegisterComponent } from "./register/register.component";
+import { UserComponent } from "./user/user.component";
+import { ContactComponent } from "./contact/contact.component";
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  /* { path: '', component: AppComponent }, */
+  { path: 'dashboard', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'logout', component: LoginComponent },
+  { path: 'profile', component: UserComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), CommonModule],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }), CommonModule],
   exports: [RouterModule],
   declarations: []
 })

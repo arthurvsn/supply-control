@@ -11,15 +11,26 @@ import { UserService } from './_services/user.service';
 export class AppComponent {
 
 	title = 'Supply Control';
-	isLogged: boolean;
-	returnUrl = '/home';
+	isLogged: any;
+	returnUrl = '/';
 
 	constructor(private userService: UserService, 
 		private route: ActivatedRoute,
 		private router: Router,) { }
 
 	ngOnInit() {
-		this.isLogged = this.userService.getIsLogged();
-		this.router.navigate([this.returnUrl]);
+		
+		if (this.userService.getUserLogged()) {
+			this.isLogged = true;
+			this.returnUrl = '/dashboard';
+		} else {
+			this.isLogged = false;
+			this.returnUrl = '/login';
+		}
+		this.router.navigate([this.returnUrl]);		
+	}
+
+	logout() {
+		this.router.navigate(['login']);
 	}
 }

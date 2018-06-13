@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/observable/throw';
 
 import { User } from '../_models/user';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Injectable()
 
@@ -12,54 +17,34 @@ export class UserService {
     urlApi = 'http://localhost:8000/api';
     isLogged = false;
     user: User;
+    token: any;
+    private headers = new Headers({ 'Content-Type': 'application/json', 'token': this.token });
+    private options = new RequestOptions({ headers: this.headers });
     
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, 
+                authenticationService: AuthenticationService) {
+                    this.token = authenticationService.getToken();
+                }
     
     getAll() {
         return this.http.get<any>(this.urlApi + '/user');
     }
 
-    login(username: string, password: string) {
-        return this.http.post<any>(this.urlApi + '/login', { username: username, password: password })
-            .pipe(map((res: any) => {
+    getUserLogged(): any {        
+        if (localStorage.getItem('currentUser')) {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
 
-                // login successful if there's a jwt token in the response
-                if (res.message.type == "S") {
-                    this.isLogged = true;
-                    let token = res.dataset.token;
-                    let username = res.dataset.user.username;
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
-                }
+            this.user = user.user;
 
-                return res;
-            }));
-    }
-
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-    }
-
-    getIsLogged() {
-        if(localStorage.getItem('currentUser') != null) {
-            return true;
+            return this.user;
         } else {
             return false;
         }
     }
 
-    getUserLogged() {
-        if (localStorage.getItem('currentUser')) {
-            let user = JSON.parse(localStorage.getItem("currentUser"));
-
-            var headers = new HttpHeaders().set('token', user.token);
-            //headers.append('token', user.token);
-            var options = {
-                headers: headers
-            };
-
-            return this.http.get<any>(this.urlApi + '/getAuthUser', options);
-            
-        }
+    private handleError(error: any) {
+        let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
     }
 }
