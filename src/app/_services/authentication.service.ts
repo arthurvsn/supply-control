@@ -35,10 +35,10 @@ export class AuthenticationService {
                         return true;
                     } else {
                         // Retorna falso para indicar uma falha de login
-                        return false;
+                        return "Failed to create a token";
                     }
                 } else {
-                    return false;
+                    return response.message.text;
                 }
             });
     }

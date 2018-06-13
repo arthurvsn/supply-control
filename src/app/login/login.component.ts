@@ -56,10 +56,10 @@ export class LoginComponent implements OnInit {
 			.pipe(first())
 			.subscribe(				
 				data => {
-					if (data) {
+					if (data == true) {
 						this.router.navigate([this.returnUrl]);
 					} else {
-						this.error = "Erro on login";
+						this.error = data;
 						this.loading = false;
 					}
 				},
