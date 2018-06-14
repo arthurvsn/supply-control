@@ -50,24 +50,16 @@ export class AuthenticationService {
     }
 
     getToken(): string {
-
-        if (this.token) {
-            return this.token;
-        } else {
-            if (localStorage.getItem('currentUser')) {
-                let user = JSON.parse(localStorage.getItem("currentUser"));
-
-                let token = user.token;
-
-                if (token) {
-                    this.token = token;
-                    return token;
-                }
-            }
-            else {
-                return ""
-            }
-        }        
         
+        if (localStorage.getItem('currentUser')) {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            let token = user.token;
+
+            if (token) {
+                this.token = token;
+                return token;
+            }
+        }
     }
 }
