@@ -12,19 +12,21 @@ import 'rxjs/RX';
 
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Service } from '../_services/service';
 
 @Injectable()
 
 export class UserService {
     
     urlApi = 'http://localhost:8000/api/';
+    url = 'user/';
     isLogged = false;
     user: User;
     token: any;
     headers = new HttpHeaders().set('token', this.token );
     options = { headers: this.headers };
     
-    constructor(private http: HttpClient, authenticationService: AuthenticationService) {
+    constructor(private http: HttpClient, authenticationService: AuthenticationService, private service: Service) {
         this.token = authenticationService.getToken();
     }
     
@@ -44,83 +46,8 @@ export class UserService {
         }
     }
 
-    getInfoUser(id: number): any {
-        alert(id);
-        return this.http.get<any>(this.urlApi + 'user/' + id)
-            .map((response : Response) => {
-                console.log(response)
-            }) 
-    }
-
-    getUser(id: number): Observable<any> {
-        
-        let headers = new HttpHeaders().set('token', this.token);
-        let options = { headers: headers };
-        const url = `${this.urlApi}user/${id}`;
-
-        return this.http.get<any>(url, options)
-            .pipe(
-                tap(_ => this.log(`fetched supply id=${id}`)),
-                catchError(this.handleError<any>(`getSupply id=${id}`))
-            );
-    }
-    
-    getUser1(id: number) {
-        let headers = new HttpHeaders().set('token', this.token);
-        let options = { headers: headers };
-        let url = `${this.urlApi}user/${id}`;
-
-        let promise = new Promise((resolve, reject) => {
-            this.http.get(url, options)
-                .toPromise()
-                .then(
-                    res => {
-                        //this.results = res.json().results;
-                        resolve(res);
-                    },
-                    msg => {
-                        reject(msg);
-                    }
-                );
-        });
-        return promise;
-
-        /* console.log("GET AS PROMISE");
-       
-        this.http.get(url, options)
-            .toPromise()
-            .then(res => {
-                res;
-            }); */
-    }
-
-    /* private handleError(error: any) {
-        let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
-    } */
-
-    private log(message: string) {
-       console.log('UserService: ' + message);
-    }
-
-	/**
-	 * Handle Http operation that failed.
-	 * Let the app continue.
-	 * @param operation - name of the operation that failed
-	 * @param result - optional value to return as the observable result
-	 */
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
-
-            // TODO: better job of transforming error for user consumption
-            this.log(`${operation} failed: ${error.message}`);
-
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
-        };
+    getUser(id: number) {
+        let url = this.url + id;
+        return this.service.get(url, this.token);
     }
 }
