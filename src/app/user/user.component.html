@@ -22,7 +22,7 @@
 						<label for="username">Username</label>
 						<div class="input-group">
 							<input type="text" class="form-control" id="username" placeholder="Username" aria-describedby="inputGroupPrepend" formControlName="username"
-							class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required value="{{ user.username }}">
+							class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required>
 						</div>
 						<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
 							<div *ngIf="f.username.errors.required">Username is required</div>
@@ -36,7 +36,7 @@
 								<span class="input-group-text" id="inputGroupPrepend">@</span>
 							</div>
 							<input type="text" class="form-control" id="email" placeholder="E-mail" aria-describedby="inputGroupPrepend" formControlName="email"
-							class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required value="{{ user.email }}">
+							class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
 							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
 								<div *ngIf="f.email.errors.required">E-mail is required</div>
 							</div>

@@ -128,6 +128,10 @@ export class UserComponent implements OnInit {
 		);
 	}
 
+	get f() {
+		return this.userForm.controls;
+	}
+
 	private setUserForm(user: User) {
 		this.userForm.get('name').setValue(user.name);
 		this.userForm.get('username').setValue(user.username);
