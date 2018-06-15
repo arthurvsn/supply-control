@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { UserService } from "../_services/user.service";
@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
 	phones: Phone;
 	userForm: FormGroup;
 	error = '';
+	returnUrl = "/dashboard";
 	loading = false;
 	submitted = false;
 	get cpwd() {
@@ -93,7 +94,7 @@ export class UserComponent implements OnInit {
 			.subscribe(
 				user => {
 					if (user.message.type == "S") {
-						this.router.navigate(['/dashboard']);
+						this.router.navigate([this.returnUrl]);
 					} else {
 						this.error = "Erro on update Profile and " + user.message.type;
 						this.loading = false;

@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
 				data => {
 					if (data == true) {
 						this.router.navigate([this.returnUrl]);
+						window.location.reload();						
 					} else {
 						this.error = data;
 						this.loading = false;

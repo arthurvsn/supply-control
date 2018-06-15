@@ -49,6 +49,7 @@ import { FormGroup } from '@angular/forms';
 				} else {
 					return false;
 				}
-		});
+			}
+		);
 	}
 }

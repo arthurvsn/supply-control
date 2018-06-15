@@ -27,8 +27,8 @@ export class Service {
 
         return this.http.get<any>(newUrl, options)
             .pipe(
-                tap(_ => this.log(`fetched supply url = ${newUrl}`)),
-                catchError(this.handleError<any>(`getSupply url=${newUrl}`))
+                tap(_ => this.log(`GET url = ${ newUrl }`)),
+                catchError(this.handleError<any>(`getSupply url=${ newUrl }`))
             );
         
     }
@@ -41,8 +41,8 @@ export class Service {
 
         return this.http.post<any>(newUrl, body, options)
             .pipe(
-                tap(_ => this.log(`Post url = ${newUrl}`)),
-                catchError(this.handleError<any>(`Error POST url=${newUrl}`))
+                tap(_ => this.log(`Post url = ${ newUrl }`)),
+                catchError(this.handleError<any>(`Error POST url=${ newUrl }`))
             );
     }
 
@@ -53,8 +53,20 @@ export class Service {
 
         return this.http.put<any>(newUrl, body, options)
             .pipe(
-                tap(_ => this.log(`PUT url = ${newUrl}`)),
-                catchError(this.handleError<any>(`Error PUT url=${newUrl}`))
+                tap(_ => this.log(`PUT url = ${ newUrl }`)),
+                catchError(this.handleError<any>(`Error PUT url=${ newUrl }`))
+            );
+    }
+
+    delete(url: string, token:any): Observable<any> {
+        let options = this.createHeader(token);
+
+        let newUrl = this.urlApi + url;
+
+        return this.http.delete(newUrl, options)
+            .pipe(
+                tap(_ => this.log(`DELETE url' = ${ newUrl }`)),
+                catchError(this.handleError<any>(`Error PUT url = ${ newUrl }`))
             );
     }
 
@@ -67,7 +79,7 @@ export class Service {
     }
 
     private log(message: string) {
-        console.log('UserService: ' + message);
+        console.log('Service: ' + message);
     }
 
 	/**
