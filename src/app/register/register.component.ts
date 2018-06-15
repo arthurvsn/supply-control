@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { RegisterService } from "../_services/register.service";
+import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
 
+function passwordConfirming(c: AbstractControl): any {
+	if (!c.parent || !c) return;
+	const pwd = c.parent.get('password');
+	const cpwd = c.parent.get('confirmedPassword');
+
+	if (!pwd || !cpwd) return;
+	if (pwd.value !== cpwd.value) {
+		return { invalid: true };
+
+	}
+}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,39 +30,41 @@ export class RegisterComponent implements OnInit {
 	submitted = false;
 	loading = false;
 	error = '';
-
-	constructor(private formBuilder: FormBuilder,
-				private registerService: RegisterService,
-				private route: ActivatedRoute,
-				private router: Router,) {		
+	get cpwd() {
+		return this.registerForm.get('confirmedPassword');
 	}
+
+	constructor(private registerService: RegisterService,
+				private router: Router,
+				private userService: UserService) {	}
 	
 	ngOnInit() {
-		this.registerForm = this.formBuilder.group({
-			name: ['', Validators.required],
-			username: ['', Validators.required],
-			email: ['', Validators.required],
-			password: ['', Validators.required],
-			zipcode: ['', Validators.required],
-			street: ['', Validators.required],
-			city: ['', Validators.required],
-			state: ['', Validators.required],
-			country: ['', Validators.required],
-			phone: ['', Validators.required],
-			code: ['', Validators.required],
+		this.registerForm = new FormGroup({
+			name: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
+			username: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
+			email: new FormControl(null, [Validators.required, Validators.email, Validators.minLength(5)]),
+			password: new FormControl(null, [Validators.required]),
+			confirmedPassword: new FormControl(null, [Validators.required, passwordConfirming]),
+			zipcode: new FormControl(null, [Validators.required]),
+			street: new FormControl({value: null, disabled: true}, [Validators.required]),
+			city: new FormControl({value: null, disabled: true}, [Validators.required]),
+			state: new FormControl({value: null, disabled: true}, [Validators.required]),
+			country: new FormControl({value: null, disabled: true}, [Validators.required]),
+			code: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+			phone: new FormControl(null, [Validators.required]),
 		});
 	}
 
 	onSubmit() {
-		this.submitted = true;
 
+		this.submitted = true;
 		// stop here if form is invalid
 		if (this.registerForm.invalid) {
 			return;
 		}
 		this.loading = true;
 
-		this.registerService.saveNewUser(this.f)
+		this.registerService.saveNewUser(this.registerForm)
 			.pipe(first())
 			.subscribe(
 				data => {
@@ -65,7 +79,7 @@ export class RegisterComponent implements OnInit {
 					this.error = error.message;
 					this.error = "Error on register";
 					this.loading = false;
-			});;
+			});
 	}
 
 	get f() {
@@ -73,7 +87,7 @@ export class RegisterComponent implements OnInit {
 	}
 
 	seacrchAddress(zipcode: any) {		
-		this.registerService.getAddress(zipcode)
+		this.userService.getAddress(zipcode)
 			.pipe(first())
 			.subscribe(address => {
 				this.registerForm.get('street').setValue(address.logradouro);

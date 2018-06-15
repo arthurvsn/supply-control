@@ -2,6 +2,9 @@
 	<div class="row">
 		<div class="col-12">
 			<h3>Register</h3>
+
+			<br />
+			<h3>User</h3>
 			<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 				<div class="form-row">
 					<div class="col-md-3 mb-3">
@@ -38,7 +41,8 @@
 							</div>
 						</div>
 					</div>
-
+				</div>
+				<div class="row">
 					<div class="col-md-3 mb-3">
 						<label for="password">Password</label>
 						<input type="password" id="password" formControlName="password" class="form-control" 
@@ -47,17 +51,25 @@
 							<div *ngIf="f.password.errors.required">Password is required</div>
 						</div>
 					</div>
+					<div class="col-md-3 mb-3">
+						<label for="confirmedPassword">Repeat your password</label>
+						<input type="password" id="confirmedPassword" formControlName="confirmedPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmedPassword.errors }">
+						<div class="invalid-feedback" *ngIf="cpwd.hasError('invalid')"> Invalid Password </div>
+						<div *ngIf="submitted && f.confirmedPassword.errors" class="invalid-feedback">
+							<div *ngIf="f.confirmedPassword.errors.required">Confirmed password is required</div>
+						</div>
+					</div>
 				</div>
 
+				<h3>Address</h3>
 				<div class="form-row">
-
 					<div class="col-md-3 mb-3">
 
 						<label for="zipcode">Zipcode</label>
 						<input type="text" id="zipcode" formControlName="zipcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" #zipcodeInput
 						placeholder="Zip Code" required (change)="seacrchAddress(zipcodeInput.value)">
 						<div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
-							<div *ngIf="f.zipcode.errors.required">Password is required</div>
+							<div *ngIf="f.zipcode.errors.required">ZipCode is required to complet your address.</div>
 						</div>
 					</div>
 
@@ -85,6 +97,8 @@
 						 formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
 					</div>
 				</div>
+
+				<h3>Phones</h3>
 				<div class="form-row">
 					<div class="col-md-3 mb-3">
 						<label for="code">Code</label>

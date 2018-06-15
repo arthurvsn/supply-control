@@ -6,16 +6,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
+import { Service } from "./_services/service";
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './/app-routing.module';
 import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
-import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ContactComponent } from './contact/contact.component';
   providers: [
     AuthGuard,
     AuthenticationService,
+    Service,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

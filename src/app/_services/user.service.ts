@@ -1,33 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/RX';
 
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Service } from '../_services/service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable()
 
 export class UserService {
     
-    urlApi = 'http://localhost:8000/api';
+    urlApi = 'http://localhost:8000/api/';
+    url = 'user/';
     isLogged = false;
     user: User;
     token: any;
-    private headers = new Headers({ 'Content-Type': 'application/json', 'token': this.token });
-    private options = new RequestOptions({ headers: this.headers });
+    headers = new HttpHeaders().set('token', this.token );
+    options = { headers: this.headers };
     
-    constructor(private http: HttpClient, 
-                authenticationService: AuthenticationService) {
-                    this.token = authenticationService.getToken();
-                }
+    constructor(private http: HttpClient, authenticationService: AuthenticationService, private service: Service) {
+        this.token = authenticationService.getToken();
+    }
     
+    private createBodyUser(form: FormGroup) {
+        
+        let objAdress = {
+            street: form.get('street').value,
+            city: form.get('city').value,
+            state: form.get('state').value,
+            zip_code: form.get('zipcode').value,
+            country: form.get('country').value,
+        };
+
+        let objPhone = {
+            country_code: form.get('code').value,
+            number: form.get('phone').value,
+        };
+
+        let body = {
+            name: form.get('name').value,
+            username: form.get('username').value,
+            email: form.get('email').value,
+            profile_picture: "teste",
+            password: form.get('password').value,
+            user_type: "ARTIST",
+            addresses: [
+                objAdress
+            ],
+            phones: [
+                objPhone
+            ]
+        };
+
+        return body;
+    }
+
+    getAddress(zipcode: string) {
+        return this.http.get<any>('http://viacep.com.br/ws/' + zipcode + '/json/');
+    }
+
     getAll() {
-        return this.http.get<any>(this.urlApi + '/user');
+        return this.http.get<any>(this.urlApi + 'user');
     }
 
     getUserLogged(): any {        
@@ -42,9 +84,21 @@ export class UserService {
         }
     }
 
-    private handleError(error: any) {
-        let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
+    getUser(id: number) {
+        let url = this.url + id;
+        return this.service.get(url, this.token);
+    }
+
+    storeUser(body: any) {
+        let url = 'store';
+    }
+
+    updateUser(id: number, form: FormGroup) {
+        
+        let url = this.url + id;
+
+        let body = this.createBodyUser(form);
+
+        return this.service.update(url, body, this.token);
     }
 }

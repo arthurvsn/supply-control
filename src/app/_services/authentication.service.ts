@@ -35,10 +35,10 @@ export class AuthenticationService {
                         return true;
                     } else {
                         // Retorna falso para indicar uma falha de login
-                        return false;
+                        return "Failed to create a token";
                     }
                 } else {
-                    return false;
+                    return response.message.text;
                 }
             });
     }
@@ -50,24 +50,16 @@ export class AuthenticationService {
     }
 
     getToken(): string {
-
-        if (this.token) {
-            return this.token;
-        } else {
-            if (localStorage.getItem('currentUser')) {
-                let user = JSON.parse(localStorage.getItem("currentUser"));
-
-                let token = user.token;
-
-                if (token) {
-                    this.token = token;
-                    return token;
-                }
-            }
-            else {
-                return ""
-            }
-        }        
         
+        if (localStorage.getItem('currentUser')) {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            let token = user.token;
+
+            if (token) {
+                this.token = token;
+                return token;
+            }
+        }
     }
 }
