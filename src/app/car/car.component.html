@@ -1,3 +1,70 @@
-<p>
-  car works!
-</p>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h3>Crud Car</h3>
+
+			<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+				<div class="form-row">
+					<div class="col-md-4 mb-4">
+						<label for="board">Board:</label>
+						<input type="text" class="form-control" id="board" placeholder="Board" formControlName="board">
+						<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+							<div *ngIf="f.board.errors.required">Board is required</div>
+							<div *ngIf="f.board.errors.maxLength">Max characters</div>
+						</div>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<label for="model">Model:</label>
+						<input type="text" class="form-control" id="model" placeholder="Model" formControlName="model">
+						<div *ngIf="submitted && f.model.errors" class="invalid-feedback">
+							<div *ngIf="f.model.errors.required">Model is required</div>
+						</div>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<label for="manufacturer">Manufacturer:</label>
+						<input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer" formControlName="manufacturer">
+						<div *ngIf="submitted && f.manufacturer.errors" class="invalid-feedback">
+							<div *ngIf="f.manufacturer.errors.required">Manufacturer is required</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="col-md-4 mb-4">
+						<label for="color">Color:</label>
+						<input type="text" class="form-control" id="color" placeholder="Color" formControlName="color">
+						<div *ngIf="submitted && f.color.errors" class="invalid-feedback">
+							<div *ngIf="f.color.errors.required">Color is required</div>
+						</div>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<label for="year_manufacture">Year manufacture:</label>
+						<input type="date" class="form-control" id="year_manufacture" placeholder="Year anufacture" formControlName="year_manufacture">
+						<div *ngIf="submitted && f.year_manufacture.errors" class="invalid-feedback">
+							<div *ngIf="f.year_manufacture.errors.required">Year manufacture is required</div>
+						</div>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<label for="capacity">Capacity:</label>
+						<input type="number" class="form-control" id="capacity" placeholder="Capacity" formControlName="capacity">
+						<div *ngIf="submitted && f.capacity.errors" class="invalid-feedback">
+							<div *ngIf="f.capacity.errors.required">Capacity is required</div>
+							<div *ngIf="f.capacity.errors.maxLength">Max characters</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<button [disabled]="loading" class="btn btn-primary">Save Car</button>
+					<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+				</div>
+
+				<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+			</form>
+			
+		</div>
+	</div>
+</div>
