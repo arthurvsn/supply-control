@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -10,32 +11,28 @@ import { Observable } from 'rxjs';
 	urlApi = 'http://localhost:8000/api';
 
 	constructor(private http: HttpClient) { }
-	  
-	getAddress(zipcode: string){
-		return this.http.get<any>('http://viacep.com.br/ws/'+zipcode+'/json/');			
-	}
-
-	saveNewUser(form: any) {
+	
+	saveNewUser(form: FormGroup) {
 		
 		let objAdress = {
-			street: form.street.value,
-			city: form.city.value,
-			state: form.state.value,
-			zip_code: form.zipcode.value,
-			country: form.country.value,
+			street: form.get('street').value,
+			city: form.get('city').value,
+			state: form.get('state').value,
+			zip_code: form.get('zipcode').value,
+			country: form.get('country').value,
 		};
 
 		let objPhone = {
-			country_code: form.code.value,
-			number: form.phone.value,
+			country_code: form.get('code').value,
+			number: form.get('phone').value,
 		};
 
 		let body = {
-			name: form.name.value,
-			username: form.username.value,
-			email: form.email.value,
+			name: form.get('name').value,
+			username: form.get('username').value,
+			email: form.get('email').value,
 			profile_picture: "teste",
-			password: form.password.value,
+			password: form.get('password').value,
 			user_type: "ARTIST",
 			addresses: [
 				objAdress
@@ -44,7 +41,7 @@ import { Observable } from 'rxjs';
 				objPhone
 			]
 		};
-
+		
 		return this.http.post(this.urlApi + '/register', body)
 			.map((response: any) => {
 				if( response.message.type == "S") {

@@ -13,6 +13,7 @@ import 'rxjs/RX';
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable()
 
@@ -30,6 +31,43 @@ export class UserService {
         this.token = authenticationService.getToken();
     }
     
+    private createBodyUser(form: FormGroup) {
+        
+        let objAdress = {
+            street: form.get('street').value,
+            city: form.get('city').value,
+            state: form.get('state').value,
+            zip_code: form.get('zipcode').value,
+            country: form.get('country').value,
+        };
+
+        let objPhone = {
+            country_code: form.get('code').value,
+            number: form.get('phone').value,
+        };
+
+        let body = {
+            name: form.get('name').value,
+            username: form.get('username').value,
+            email: form.get('email').value,
+            profile_picture: "teste",
+            password: form.get('password').value,
+            user_type: "ARTIST",
+            addresses: [
+                objAdress
+            ],
+            phones: [
+                objPhone
+            ]
+        };
+
+        return body;
+    }
+
+    getAddress(zipcode: string) {
+        return this.http.get<any>('http://viacep.com.br/ws/' + zipcode + '/json/');
+    }
+
     getAll() {
         return this.http.get<any>(this.urlApi + 'user');
     }
@@ -49,5 +87,18 @@ export class UserService {
     getUser(id: number) {
         let url = this.url + id;
         return this.service.get(url, this.token);
+    }
+
+    storeUser(body: any) {
+        let url = 'store';
+    }
+
+    updateUser(id: number, form: FormGroup) {
+        
+        let url = this.url + id;
+
+        let body = this.createBodyUser(form);
+
+        return this.service.update(url, body, this.token);
     }
 }

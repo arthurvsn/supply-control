@@ -54,8 +54,9 @@
 					<div class="col-md-3 mb-3">
 						<label for="confirmedPassword">Repeat your password</label>
 						<input type="password" id="confirmedPassword" formControlName="confirmedPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmedPassword.errors }">
+						<div class="invalid-feedback" *ngIf="cpwd.hasError('invalid')"> Invalid Password </div>
 						<div *ngIf="submitted && f.confirmedPassword.errors" class="invalid-feedback">
-							<div *ngIf="f.confirmedPassword.errors.required">Password not complete</div>
+							<div *ngIf="f.confirmedPassword.errors.required">Confirmed password is required</div>
 						</div>
 					</div>
 				</div>

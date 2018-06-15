@@ -33,6 +33,31 @@ export class Service {
         
     }
 
+    post(url: string, body: any, token:any): Observable<any> {
+
+        let options = this.createHeader(token);
+
+        let newUrl = this.urlApi + url;
+
+        return this.http.post<any>(newUrl, body, options)
+            .pipe(
+                tap(_ => this.log(`Post url = ${newUrl}`)),
+                catchError(this.handleError<any>(`Error POST url=${newUrl}`))
+            );
+    }
+
+    update(url: string, body: any, token: any): Observable<any> {
+        let options = this.createHeader(token);
+
+        let newUrl = this.urlApi + url;
+
+        return this.http.put<any>(newUrl, body, options)
+            .pipe(
+                tap(_ => this.log(`PUT url = ${newUrl}`)),
+                catchError(this.handleError<any>(`Error PUT url=${newUrl}`))
+            );
+    }
+
     private createHeader(token: string) {
 
         let headers = new HttpHeaders().set('token', token);
