@@ -67,10 +67,11 @@
 			
 						<label for="zipcode">Zipcode</label>
 						<input type="text" id="zipcode" formControlName="zipcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }"
-						#zipcodeInput placeholder="Zip Code" required (change)="seacrchAddress(zipcodeInput.value)">
+						#zipcodeInput2 placeholder="Zip Code" required (change)="seacrchAddress(zipcodeInput2.value)">
 						<div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
 							<div *ngIf="f.zipcode.errors.required">Password is required</div>
 						</div>
+						<div *ngIf="errorAddress" class="alert alert-danger">{{ errorAddress }}</div>
 					</div>
 			
 					<div class="col-md-3 mb-3">

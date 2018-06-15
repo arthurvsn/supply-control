@@ -65,7 +65,8 @@ export class UserService {
     }
 
     getAddress(zipcode: string) {
-        return this.http.get<any>('http://viacep.com.br/ws/' + zipcode + '/json/');
+        let url = 'http://viacep.com.br/ws/' + zipcode + '/json/';
+        return this.http.get<any>(url);
     }
 
     getAll() {

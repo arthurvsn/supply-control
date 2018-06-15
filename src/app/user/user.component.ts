@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
 	phones: Phone;
 	userForm: FormGroup;
 	error = '';
+	errorAddress = '';
 	returnUrl = "/dashboard";
 	loading = false;
 	submitted = false;
@@ -120,7 +121,11 @@ export class UserComponent implements OnInit {
 				this.userForm.get('country').setValue("Brasil");
 				this.userForm.get('state').setValue(address.uf);
 				this.userForm.get('city').setValue(address.localidade);
-			});
+			}, 
+			error => {
+				this.errorAddress = error
+			}
+		);
 	}
 
 	private setUserForm(user: User) {

@@ -30,6 +30,8 @@ export class RegisterComponent implements OnInit {
 	submitted = false;
 	loading = false;
 	error = '';
+	errorAddress = '';
+
 	get cpwd() {
 		return this.registerForm.get('confirmedPassword');
 	}
@@ -94,6 +96,9 @@ export class RegisterComponent implements OnInit {
 				this.registerForm.get('country').setValue("Brasil");
 				this.registerForm.get('state').setValue(address.uf);
 				this.registerForm.get('city').setValue(address.localidade);
-		});
+			}, error => {
+				this.errorAddress = error
+			}
+		);
 	}
 }

@@ -71,6 +71,7 @@
 						<div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
 							<div *ngIf="f.zipcode.errors.required">ZipCode is required to complet your address.</div>
 						</div>
+						<div *ngIf="errorAddress" class="alert alert-danger">{{ errorAddress }}</div>
 					</div>
 
 					<div class="col-md-3 mb-3">
