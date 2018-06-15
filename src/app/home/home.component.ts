@@ -23,28 +23,12 @@ export class HomeComponent implements OnInit {
 		private router: Router) {  }
 	
   	ngOnInit() {
-			
-		/* this.userService.getAll()
-			.pipe(first())
-			.subscribe(users => {
-				this.users = users.dataset.user;
-		}); */
-
 		this.getUserLogged();
 	}
 	  
 	getUserLogged(): void {
 		
 		this.user = this.userService.getUserLogged();
-		/* this.userService.getUserLogged()
-			.subscribe(data => {
-				
-				if (data.message.type == "S") {
-					this.user = data.dataset.user;
-				}
-			},
-			error => console.log(error)
-		); */
 	}
 
 	getInfoCar(id: number) {

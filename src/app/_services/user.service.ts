@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
@@ -65,12 +62,17 @@ export class UserService {
     }
 
     getAddress(zipcode: string) {
-        let url = 'http://viacep.com.br/ws/' + zipcode + '/json/';
+        let url = 'https://viacep.com.br/ws/' + zipcode + '/json/';
         return this.http.get<any>(url);
     }
 
     getAll() {
         return this.http.get<any>(this.urlApi + 'user');
+    }
+
+    validateToken(): any {
+        if (!this.token) { return; }
+        return this.service.ping(this.token);
     }
 
     getUserLogged(): any {        
@@ -101,5 +103,12 @@ export class UserService {
         let body = this.createBodyUser(form);
 
         return this.service.update(url, body, this.token);
+    }
+
+    deleteUser(id: number) {
+
+        let url = this.url + id;
+
+        return this.service.delete(url, this.token);
     }
 }

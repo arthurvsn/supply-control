@@ -21,8 +21,25 @@ export class AppComponent {
 	ngOnInit() {
 		
 		if (this.userService.getUserLogged()) {
-			this.isLogged = true;
-			this.returnUrl = '/dashboard';
+
+			this.userService.validateToken()
+				.subscribe(
+					ping => {
+						if (ping.message.type == "S") {
+							this.isLogged = true;
+							this.returnUrl = '/dashboard';
+							this.router.navigate([this.returnUrl]);
+						} else {
+							this.isLogged = false;
+							this.returnUrl = '/login';
+							this.router.navigate([this.returnUrl]);
+						}
+					}, error => {
+						console.error(error);
+						this.returnUrl = '/login';
+						this.router.navigate([this.returnUrl]);
+					}
+				);
 		} else {
 			this.isLogged = false;
 			this.returnUrl = '/login';

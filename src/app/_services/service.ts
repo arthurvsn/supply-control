@@ -19,6 +19,18 @@ export class Service {
 
     constructor(private http: HttpClient) {   }
 
+    ping(token: string) {
+        
+        let options = this.createHeader(token);
+        let newUrl = this.urlApi + 'ping';
+
+        return this.http.get(newUrl, options)
+            .pipe(
+                tap(_ => this.log(`GET url' = ${newUrl}`)),
+                catchError(this.handleError<any>(`Error GET url = ${newUrl}`))
+            );;
+    }
+
     get(url: string, token: any): Observable<any> {
 
         let options = this.createHeader(token);
