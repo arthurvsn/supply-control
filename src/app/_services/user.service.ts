@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
@@ -10,7 +11,6 @@ import 'rxjs/RX';
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
-import { FormGroup } from '@angular/forms';
 
 @Injectable()
 

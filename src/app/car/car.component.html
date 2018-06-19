@@ -7,8 +7,9 @@
 				<div class="form-row">
 					<div class="col-md-4 mb-4">
 						<label for="board">Board:</label>
-						<input type="text" class="form-control" id="board" placeholder="Board" formControlName="board">
-						<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+						<input type="text" class="form-control" id="board" placeholder="Board" 
+						formControlName="board" [ngClass]="{ 'is-invalid': submitted && f.board.errors }" required>
+						<div *ngIf="submitted && f.board.errors" class="invalid-feedback">
 							<div *ngIf="f.board.errors.required">Board is required</div>
 							<div *ngIf="f.board.errors.maxLength">Max characters</div>
 						</div>
@@ -16,7 +17,8 @@
 
 					<div class="col-md-4 mb-4">
 						<label for="model">Model:</label>
-						<input type="text" class="form-control" id="model" placeholder="Model" formControlName="model">
+						<input type="text" class="form-control" id="model" placeholder="Model" formControlName="model"
+						 [ngClass]="{ 'is-invalid': submitted && f.model.errors }" required>
 						<div *ngIf="submitted && f.model.errors" class="invalid-feedback">
 							<div *ngIf="f.model.errors.required">Model is required</div>
 						</div>
@@ -24,7 +26,8 @@
 
 					<div class="col-md-4 mb-4">
 						<label for="manufacturer">Manufacturer:</label>
-						<input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer" formControlName="manufacturer">
+						<input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer" formControlName="manufacturer"
+						 [ngClass]="{ 'is-invalid': submitted && f.manufacturer.errors }" required>
 						<div *ngIf="submitted && f.manufacturer.errors" class="invalid-feedback">
 							<div *ngIf="f.manufacturer.errors.required">Manufacturer is required</div>
 						</div>
@@ -34,7 +37,8 @@
 				<div class="form-row">
 					<div class="col-md-4 mb-4">
 						<label for="color">Color:</label>
-						<input type="text" class="form-control" id="color" placeholder="Color" formControlName="color">
+						<input type="text" class="form-control" id="color" placeholder="Color" formControlName="color"
+						 [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required>
 						<div *ngIf="submitted && f.color.errors" class="invalid-feedback">
 							<div *ngIf="f.color.errors.required">Color is required</div>
 						</div>
@@ -42,7 +46,8 @@
 
 					<div class="col-md-4 mb-4">
 						<label for="year_manufacture">Year manufacture:</label>
-						<input type="date" class="form-control" id="year_manufacture" placeholder="Year anufacture" formControlName="year_manufacture">
+						<input type="date" class="form-control" id="year_manufacture" placeholder="Year anufacture" formControlName="year_manufacture"
+						 [ngClass]="{ 'is-invalid': submitted && f.year_manufacture.errors }" required>
 						<div *ngIf="submitted && f.year_manufacture.errors" class="invalid-feedback">
 							<div *ngIf="f.year_manufacture.errors.required">Year manufacture is required</div>
 						</div>
@@ -50,7 +55,8 @@
 
 					<div class="col-md-4 mb-4">
 						<label for="capacity">Capacity:</label>
-						<input type="number" class="form-control" id="capacity" placeholder="Capacity" formControlName="capacity">
+						<input type="number" class="form-control" id="capacity" placeholder="Capacity" formControlName="capacity"
+						 [ngClass]="{ 'is-invalid': submitted && f.capacity.errors }" required>
 						<div *ngIf="submitted && f.capacity.errors" class="invalid-feedback">
 							<div *ngIf="f.capacity.errors.required">Capacity is required</div>
 							<div *ngIf="f.capacity.errors.maxLength">Max characters</div>

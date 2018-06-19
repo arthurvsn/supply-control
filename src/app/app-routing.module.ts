@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'logout', component: LoginComponent },
   { path: 'profile', component: UserComponent },
+  { path: 'car', component: CarComponent },
   { path: 'car/detail/:id', component: CarDetailComponent },
 ];
 

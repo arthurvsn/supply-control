@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { first } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-import { tap, delay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { User } from '../_models/user';
 import { Car } from "../_models/car";
@@ -40,16 +37,11 @@ export class HomeComponent implements OnInit {
 				cars => {
 					if(cars.message.type == "S") {
 						this.cars = cars.dataset.cars;
-						console.log(this.cars);
 					}
 				}, error => {
 					console.error(error)
 				}
 			);
-	}
-
-	addCar(): void {
-		alert("ADD");
 	}
 	
 	getInfoCar(id: number) {

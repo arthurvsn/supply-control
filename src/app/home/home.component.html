@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <div>
-                        <h4>My cars</h4>                        
+                        <h4>My cars</h4>
                         <div class="list-group" *ngFor="let car of cars">
                             <ul class="list-group-item list-group-item-action">
                                 <a routerLink="/car/detail/{{car.id}}">
@@ -25,7 +25,9 @@
                 </div>
 
                 <div class="button-float">
-                    <button (click)="addCar()">Add Car</button>
+                    <button>
+                        <a routerLink="/car">Add Car</a>
+                    </button>
                 </div>
 
             </div>
