@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
 	
   	ngOnInit() {
 		this.getUserLogged();
+		this.getCars();
 	}
 	  
 	getUserLogged(): void {		
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
 				cars => {
 					if(cars.message.type == "S") {
 						this.cars = cars.dataset.cars;
+						console.log(this.cars);
 					}
 				}, error => {
 					console.error(error)
@@ -46,6 +48,10 @@ export class HomeComponent implements OnInit {
 			);
 	}
 
+	addCar(): void {
+		alert("ADD");
+	}
+	
 	getInfoCar(id: number) {
 		alert(id);
 	}

@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { CarComponent } from './car/car.component';
+import { CarDetailComponent } from './car-detail/car-detail.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CarComponent } from './car/car.component';
     UserComponent,
     ContactComponent,
     CarComponent,
+    CarDetailComponent,
   ],
   imports: [
     BrowserModule,

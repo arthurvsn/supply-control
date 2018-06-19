@@ -12,24 +12,24 @@ export class CarService {
 
 	car: Car;
 	token: string;
-	url = 'user/';
+	url = 'car/';
 
 	constructor(private service: Service, authenticationService: AuthenticationService) { 
 		this.token = authenticationService.getToken();
 	}
 
-	getAllCarsByUser(id: number) {
+	getAllCarsByUser(userID: number) {
 		
-		let url = this.url + id;
+		let url = this.url + 'user/' + userID;
 
 		return this.service.get(url, this.token);
 	}
 
-	storeCar(idUser: number, form: FormGroup) {
+	storeCar(userID: number, form: FormGroup) {
 
 		let url = this.url;
 
-		let body = this.createBodyCar(idUser, form);
+		let body = this.createBodyCar(userID, form);
 
 		return this.service.post(url, body, this.token);
 	}

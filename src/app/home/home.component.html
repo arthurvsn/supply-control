@@ -13,15 +13,21 @@
                 <div class="col-12">
                     <div>
                         <h4>My cars</h4>                        
-                        <div class="list-group">
-                            <ul class="list-group-item list-group-item-action" (click)="getInfoCar(1)">Civic</ul>
-                            <ul class="list-group-item list-group-item-action" (click)="getInfoCar(2)">City</ul>
-                            <ul class="list-group-item list-group-item-action" (click)="getInfoCar(3)">HB-20</ul>
-                            <ul class="list-group-item list-group-item-action" (click)="getInfoCar(4)">Onix</ul>
-                            <ul class="list-group-item list-group-item-action" (click)="getInfoCar(5)">Tucson</ul>
+                        <div class="list-group" *ngFor="let car of cars">
+                            <ul class="list-group-item list-group-item-action">
+                                <a routerLink="/car/detail/{{car.id}}">
+                                    <span class="badge">{{car.id}}</span> {{car.model}}
+                                </a>
+                            </ul>
                         </div>
                     </div>
+
                 </div>
+
+                <div class="button-float">
+                    <button (click)="addCar()">Add Car</button>
+                </div>
+
             </div>
         </div>
     </div>

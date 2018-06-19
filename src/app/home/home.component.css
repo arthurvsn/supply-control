@@ -1,0 +1,11 @@
+.button-float {
+    position: fixed;
+    width: 56px;
+    bottom: 15px;
+    right: 50px;
+}
+
+.button-float i {
+    font-size: 40px;
+    margin-top: 6px;
+}
