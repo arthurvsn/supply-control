@@ -14,6 +14,7 @@ import { CarService } from '../_services/car.service';
 export class CarDetailComponent implements OnInit {
 
 	car: Car;
+	errorCar = true;
 	error = '';
 
 	constructor(
@@ -23,25 +24,21 @@ export class CarDetailComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.getDetailCar();
+		const id = +this.route.snapshot.paramMap.get('id');
+		this.getDetailCar(id);
 	}
 
 	goBack(): void {
 		this.location.back();
 	}
 
-	toFuel(): void {
-		alert("To fuel " + this.car.model);
-	}
-
-	getDetailCar(): void {
-		const id = +this.route.snapshot.paramMap.get('id');
-		
+	getDetailCar(id: number): void {
 		this.carService.getCar(id)
 			.subscribe(
 				data => {
 					if (data.message.type == "S") {
 						this.car = data.dataset.car;
+						this.errorCar = false;
 					} else {
 						this.error = data.message.text;
 					}
@@ -50,6 +47,10 @@ export class CarDetailComponent implements OnInit {
 					this.error = error
 				}
 			);
+	}
+
+	saveSuply(liters: number, amount: string, type: string): void {
+		alert("Save new supply " + type);
 	}
 
 }

@@ -1,12 +1,51 @@
-<!-- <div class="container">
+<div class="container">
 	<div class="row">
-		<div class="col-12">
+		<div class="col-12">			
+			<mat-card-title> Options Car </mat-card-title>
+			<mat-accordion>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<mat-icon>local_gas_station</mat-icon>
+						</mat-panel-title>
+						<mat-panel-description>
+							Type it price, liters, chose type fuel and save
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+			
+					<mat-form-field>
+						<input matInput placeholder="Liters" #liters>
+					</mat-form-field>
 
-			<div class="button-float">
-				<button (click)="toFuel()">To fuel this Car</button>
-			</div>
-			<button (click)="goBack()">Back</button>
+					<mat-divider></mat-divider>
+
+					<mat-form-field>
+						<input matInput placeholder="Amount" type="number" class="car-right-align" #amount>
+						<span matPrefix>$&nbsp;</span>
+						<span matSuffix>.00</span>
+					</mat-form-field>
+
+					<mat-divider></mat-divider>
+
+					<mat-form-field>
+						<mat-select placeholder="Type" #type>
+							<mat-option value="gasoline">Gasoline</mat-option>
+							<mat-option value="alcohol">Alcohol</mat-option>
+							<mat-option value="diesel">Diesel</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-divider></mat-divider>
+					<br />
+					<button mat-raised-button color="primary" (click)="saveSuply(liters.value, amount.value, type.value)">Save supply</button>
+				</mat-expansion-panel>
+			</mat-accordion>
+
+			<!-- <mat-card-actions>
+				<button mat-button color="light">Reports</button>
+				<button mat-button color="warn">Edit</button>
+				<button mat-button color="acent">Delete</button>
+			</mat-card-actions> -->
 		</div>
 	</div>
 </div>
- -->

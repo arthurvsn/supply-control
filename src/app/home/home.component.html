@@ -1,62 +1,36 @@
-<!-- <div class="container">
-	<div class="row">
-		<div class="col-12">
-            <h1>Dashboard</h1>
-            <div *ngIf="user; else default">
-                <p>Welcome {{ user.name }}</p>
-            </div>
-            <ng-template #default>
-                <p>Log in to see the options</p>
-            </ng-template>
-
-            <div class="row">
-                <div class="col-12">
-                    <div>
-                        <h4>My cars</h4>
-                        <div class="list-group" *ngFor="let car of cars">
-                            <ul class="list-group-item list-group-item-action">
-                                <a routerLink="/car/detail/{{car.id}}">
-                                    <span class="badge">{{car.id}}</span> {{car.model}}
-                                </a>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <span class="done">
-                    <button mat-fab>
-                        <mat-icon routerLink="/car">add_circle</mat-icon>
-                    </button>
-                </span>
-
-            </div>
-        </div>
-    </div>
-</div> -->
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div>
-                <mat-grid-list cols="2" rowHeight="2:1">
-                    <h1>Dashboard</h1>
-                    <div *ngIf="user; else default">
-                        <span>Welcome {{ user.name }}</span>
-                    </div>
-
-                    <mat-nav-list *ngFor="let car of cars">
-                        <a routerLink="/car/detail/{{car.id}}">
-                            <span class="badge">{{car.id}}</span> {{car.model}}
-                        </a>
-                    </mat-nav-list>
-                </mat-grid-list>
+            <mat-card class="dashboard-card">
+                <mat-card-title>Dashboard</mat-card-title>
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ user.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ user.username }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-list >
+                        <h2 mat-subheader>My cars</h2>
+                        <mat-list-item *ngFor="let car of cars">
+                            <mat-card-actions>
+                                <button mat-button routerLink="/car/detail/{{car.id}}">
+                                    {{car.id}}
+                                </button>
+                            </mat-card-actions>
+                            
+                            <mat-icon mat-list-icon>directions_car</mat-icon>
+                            <h4 mat-line>{{car.model}}</h4>
+                            <h4 mat-line> {{car.manufacturer}} </h4>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
 
                 <span class="done">
-                    <button mat-fab>
-                        <mat-icon routerLink="/car">add_circle</mat-icon>
+                    <button mat-fab color="primary">
+                        <mat-icon routerLink="/car">directions_car</mat-icon>
                     </button>
                 </span>
-            </div>
+            </mat-card>
         </div>
     </div>
 </div>
