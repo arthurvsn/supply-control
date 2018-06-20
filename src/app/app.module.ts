@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
@@ -37,6 +39,8 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthGuard,
