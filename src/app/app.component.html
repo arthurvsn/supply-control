@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
 		<div class="col-12">
 			<div class="pos-f-t">
@@ -37,5 +37,28 @@
 			</div>
 		</div>
 	</div>
+</div> -->
+<div>
+	<mat-toolbar color="primary">
+		<button mat-icon-button [mat-menu-trigger-for]="menu">
+			<mat-icon>local_gas_station</mat-icon>
+		</button>
+		<span>{{ title }}</span>
+	</mat-toolbar>
+	
+	<mat-menu x-position="before" #menu="matMenu">
+		<div *ngIf="!isLogged; else logged">
+			<button mat-menu-item routerLink="/login">Login</button>
+			<button mat-menu-item routerLink="/register">Register</button>
+		</div>
+		<ng-template #logged>
+			<button mat-menu-item routerLink="/dashboard">Dashboard</button>
+			<button mat-menu-item routerLink="/profile">Profile</button>
+			<button mat-menu-item (click)="logout()">Logout</button>
+		</ng-template>
+		<button mat-menu-item routerLink="/about">About</button>
+		<button mat-menu-item routerLink="/contact">Contact</button>
+	</mat-menu>
+
 </div>
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
 		<div class="col-12">
             <h1>Dashboard</h1>
@@ -24,12 +24,38 @@
 
                 </div>
 
-                <div class="button-float">
-                    <button>
-                        <a routerLink="/car">Add Car</a>
+                <span class="done">
+                    <button mat-fab>
+                        <mat-icon routerLink="/car">add_circle</mat-icon>
                     </button>
-                </div>
+                </span>
 
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <mat-grid-list cols="2" rowHeight="2:1">
+                    <h1>Dashboard</h1>
+                    <div *ngIf="user; else default">
+                        <span>Welcome {{ user.name }}</span>
+                    </div>
+
+                    <mat-nav-list *ngFor="let car of cars">
+                        <a routerLink="/car/detail/{{car.id}}">
+                            <span class="badge">{{car.id}}</span> {{car.model}}
+                        </a>
+                    </mat-nav-list>
+                </mat-grid-list>
+
+                <span class="done">
+                    <button mat-fab>
+                        <mat-icon routerLink="/car">add_circle</mat-icon>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
