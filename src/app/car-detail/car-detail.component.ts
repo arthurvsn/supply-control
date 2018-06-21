@@ -48,9 +48,4 @@ export class CarDetailComponent implements OnInit {
 				}
 			);
 	}
-
-	saveSuply(liters: number, amount: string, type: string): void {
-		alert("Save new supply " + type);
-	}
-
 }

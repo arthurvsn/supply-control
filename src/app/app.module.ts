@@ -21,6 +21,8 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { CarComponent } from './car/car.component';
 import { CarDetailComponent } from './car-detail/car-detail.component';
+import { SupplyComponent } from './supply/supply.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
     ContactComponent,
     CarComponent,
     CarDetailComponent,
+    SupplyComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
   providers: [
     AuthGuard,
     AuthenticationService,
+    DatePipe,
     Service,
     UserService,
     {

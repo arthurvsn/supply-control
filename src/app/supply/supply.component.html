@@ -1,0 +1,58 @@
+<form [formGroup]="supplyForm" (ngSubmit)="onSubmit()">
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<mat-icon>local_gas_station</mat-icon>
+				</mat-panel-title>
+				<mat-panel-description>
+					Type it price, liters, chose type fuel and save
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<mat-form-field>
+				<input matInput placeholder="Liters" formControlName="liters">
+				<span matSuffix>L</span>
+			</mat-form-field>
+
+			<mat-divider></mat-divider>
+
+			<mat-form-field>
+				<input matInput placeholder="Amount" type="number" class="car-right-align" formControlName="amount">
+				<span matPrefix>$&nbsp;</span>
+			</mat-form-field>
+
+			<mat-divider></mat-divider>
+
+			<mat-form-field>
+				<input matInput placeholder="Price Liter" type="number" class="car-right-align" formControlName="price">
+				<span matPrefix>$&nbsp;</span>
+				<span matSuffix></span>
+			</mat-form-field>
+
+			<mat-divider></mat-divider>
+
+			<mat-form-field>
+				<mat-select placeholder="Type" formControlName="type">
+					<mat-option value="gasoline">Gasoline</mat-option>
+					<mat-option value="alcohol">Alcohol</mat-option>
+					<mat-option value="diesel">Diesel</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-divider></mat-divider>
+
+			<mat-form-field>
+				<input matInput [matDatepicker]="dp3" placeholder="Input disabled" formControlName="dateSupply">
+				<mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+				<mat-datepicker #dp3 disabled="false"></mat-datepicker>
+			</mat-form-field>
+
+			<mat-divider></mat-divider>
+			<br />
+			<button mat-raised-button color="primary">Save supply</button>
+		</mat-expansion-panel>
+	</mat-accordion>
+	<div *ngIf="message" class="alert alert-success">{{ message }}</div>
+	<div *ngIf="error" class="alert alert-success">{{ error }}</div>
+</form>
