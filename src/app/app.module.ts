@@ -53,6 +53,7 @@ import { AmountControlComponent } from './amount-control/amount-control.componen
     AuthenticationService,
     DatePipe,
     Service,
+    Helper,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

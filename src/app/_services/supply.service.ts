@@ -24,9 +24,9 @@ export class SupplyService {
 		return this.service.post(this.url, body, this.token);
 	}
 
-	getAmountSupply(dateFilter: string, userID: number) {
+	getAmountSupply(dateFilterStar: string, dateFilterEnd: string, carID: number) {
 
-		let newUrl = this.url + '/' + dateFilter + '/' + userID;
+		let newUrl = this.url + '/' + dateFilterStar + '/' + dateFilterEnd + '/' + carID;
 
 		return this.service.get(newUrl, this.token);
 	}
@@ -42,7 +42,6 @@ export class SupplyService {
 			car_id: carID
 		}
 
-		console.log(body);
 		return body;
 	}
 }

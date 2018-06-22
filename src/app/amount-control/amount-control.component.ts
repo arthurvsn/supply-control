@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import { SupplyService } from '../_services/supply.service';
+import { Helper } from "../_helpers/helper";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-amount-control',
@@ -12,19 +14,34 @@ import { SupplyService } from '../_services/supply.service';
 export class AmountControlComponent implements OnInit {
 
 	amountForm: FormGroup;
-	date = new Date();
+	dateStart = new Date();
+	dateEnd = new Date();
+	amount = 0.00;
+	error = "";
 	
-	constructor(private supplyService: SupplyService, private datePipe: DatePipe) { }
+	constructor(private supplyService: SupplyService, private helper: Helper, private route: ActivatedRoute) { }
 
 	ngOnInit() {		
 		this.amountForm = new FormGroup({
-			dateSupplyStart: new FormControl({ value: this.date, disabled: true }, [Validators.required]),
-			dateSupplyEnd: new FormControl({ value: this.date, disabled: true }, [Validators.required])
+			amount: new FormControl({ value: this.amount, disabled: true }, [Validators.required]),
+			dateSupplyStart: new FormControl({ value: this.dateStart, disabled: true }, [Validators.required]),
+			dateSupplyEnd: new FormControl({ value: this.dateEnd, disabled: true }, [Validators.required])
 		});
 	}
 
-	amounthSupplyDate() {
-		let date_supply = this.datePipe.transform(this.amountForm.get('dateSupply').value, "yyyy-MM-dd");
+	filterExpenses() {
+		let dateSupplyStart = this.helper.formatDate(this.amountForm.get('dateSupplyStart').value);
+		let dateSupplyEnd = this.helper.formatDate(this.amountForm.get('dateSupplyEnd').value);
+		let carID = +this.route.snapshot.paramMap.get('id');
+		console.log(dateSupplyStart); return;
+		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
+			.subscribe(
+				data => {
+					this.amountForm.get('amount').setValue(data.dataset.supply.value);
+				}, error => {
+					this.error = error.message;
+				}
+		);		
 	}
 
 }
