@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 	cars: Car[] = [];
 	user: User;
 	isLogged: boolean;
-
+	/*ng g c new-component --module app*/
 	constructor(
 		private userService: UserService, 
 		private carService: CarService,

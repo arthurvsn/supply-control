@@ -11,6 +11,7 @@ import 'rxjs/RX';
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
+import { Observable } from 'rxjs/RX';
 
 @Injectable()
 
@@ -61,9 +62,8 @@ export class UserService {
         return body;
     }
 
-    getAddress(zipcode: string) {
-        let url = 'https://viacep.com.br/ws/' + zipcode + '/json/';
-        return this.http.get<any>(url);
+    getAddress(zipcode: string): Observable<any> {
+        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`);
     }
 
     getAll() {
@@ -75,7 +75,7 @@ export class UserService {
         return this.service.ping(this.token);
     }
 
-    getUserLogged(): any {        
+    getUserLogged(): any {
         if (localStorage.getItem('currentUser')) {
             let user = JSON.parse(localStorage.getItem("currentUser"));
 

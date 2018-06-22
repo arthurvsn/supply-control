@@ -24,6 +24,13 @@ export class SupplyService {
 		return this.service.post(this.url, body, this.token);
 	}
 
+	getAmountSupply(dateFilter: string, userID: number) {
+
+		let newUrl = this.url + '/' + dateFilter + '/' + userID;
+
+		return this.service.get(newUrl, this.token);
+	}
+
 	private bodyNewSupply(form: FormGroup, carID: number) {
 
 		let body = {

@@ -114,15 +114,18 @@ export class UserComponent implements OnInit {
 	}
 
 	seacrchAddress(zipcode: any) {
+		zipcode = 31620400;
 		this.userService.getAddress(zipcode)
-			.pipe(first())
 			.subscribe(address => {
 				this.userForm.get('street').setValue(address.logradouro);
 				this.userForm.get('country').setValue("Brasil");
 				this.userForm.get('state').setValue(address.uf);
 				this.userForm.get('city').setValue(address.localidade);
+				
 			}, 
 			error => {
+				console.error(error);
+				
 				this.errorAddress = error
 			}
 		);

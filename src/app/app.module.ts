@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { Helper } from './_helpers/helper';
 
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
@@ -23,6 +24,7 @@ import { CarComponent } from './car/car.component';
 import { CarDetailComponent } from './car-detail/car-detail.component';
 import { SupplyComponent } from './supply/supply.component';
 import { DatePipe } from '@angular/common';
+import { AmountControlComponent } from './amount-control/amount-control.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { DatePipe } from '@angular/common';
     CarComponent,
     CarDetailComponent,
     SupplyComponent,
+    AmountControlComponent,
   ],
   imports: [
     BrowserModule,
