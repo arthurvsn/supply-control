@@ -33,7 +33,7 @@ export class AmountControlComponent implements OnInit {
 		let dateSupplyStart = this.helper.formatDate(this.amountForm.get('dateSupplyStart').value);
 		let dateSupplyEnd = this.helper.formatDate(this.amountForm.get('dateSupplyEnd').value);
 		let carID = +this.route.snapshot.paramMap.get('id');
-		console.log(dateSupplyStart); return;
+		
 		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
 			.subscribe(
 				data => {
