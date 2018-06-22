@@ -63,7 +63,11 @@ export class UserService {
     }
 
     getAddress(zipcode: string): Observable<any> {
-        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`);
+        let headers = new HttpHeaders().delete('token');
+        
+        let options = { headers: headers };
+
+        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`, options);
     }
 
     getAll() {

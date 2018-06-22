@@ -97,7 +97,7 @@ export class UserComponent implements OnInit {
 					if (user.message.type == "S") {
 						this.router.navigate([this.returnUrl]);
 					} else {
-						this.error = "Erro on update Profile and " + user.message.type;
+						this.error = "Erro on update Profile and " + user.message.message;
 						this.loading = false;
 					}
 				}, error => {
@@ -114,7 +114,7 @@ export class UserComponent implements OnInit {
 	}
 
 	seacrchAddress(zipcode: any) {
-		zipcode = 31620400;
+		
 		this.userService.getAddress(zipcode)
 			.subscribe(address => {
 				this.userForm.get('street').setValue(address.logradouro);
@@ -124,8 +124,7 @@ export class UserComponent implements OnInit {
 				
 			}, 
 			error => {
-				console.error(error);
-				
+				console.error(error)				
 				this.errorAddress = error
 			}
 		);
