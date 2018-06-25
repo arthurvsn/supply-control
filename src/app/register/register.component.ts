@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { RegisterService } from "../_services/register.service";

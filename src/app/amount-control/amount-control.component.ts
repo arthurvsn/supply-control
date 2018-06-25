@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { SupplyService } from '../_services/supply.service';
 import { Helper } from "../_helpers/helper";
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-amount-control',

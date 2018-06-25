@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 
 import { UserService } from "../_services/user.service";
+import { Helper } from '../_helpers/helper';
 import { User } from "../_models/user";
 import { Address } from "../_models/address";
 import { Phone } from "../_models/phone";
@@ -42,7 +42,7 @@ export class UserComponent implements OnInit {
 		return this.userForm.get('confirmedPassword');
 	}
 
-	constructor(private userService: UserService, private router: Router) { }
+	constructor(private userService: UserService, private router: Router, private helper: Helper) { }
 
 	ngOnInit() {
 		this.user = this.userService.getUserLogged();
@@ -95,9 +95,10 @@ export class UserComponent implements OnInit {
 			.subscribe(
 				user => {
 					if (user.message.type == "S") {
+						this.helper.openSnackBar(user.message.text, user.message.type);
 						this.router.navigate([this.returnUrl]);
 					} else {
-						this.error = "Erro on update Profile and " + user.message.message;
+						this.helper.openSnackBar("Erro on update Profile and " + user.message.message, user.message.type);
 						this.loading = false;
 					}
 				}, error => {
@@ -120,8 +121,7 @@ export class UserComponent implements OnInit {
 				this.userForm.get('street').setValue(address.logradouro);
 				this.userForm.get('country').setValue("Brasil");
 				this.userForm.get('state').setValue(address.uf);
-				this.userForm.get('city').setValue(address.localidade);
-				
+				this.userForm.get('city').setValue(address.localidade);				
 			}, 
 			error => {
 				console.error(error)				
@@ -151,12 +151,6 @@ export class UserComponent implements OnInit {
 	private setPhonesForm(phone: Phone) {
 		this.userForm.get('code').setValue(phone.country_code);
 		this.userForm.get('phone').setValue(phone.number);
-	}
-
-	showUser() {
-		console.log(this.user2);
-		console.log(this.address);
-		console.log(this.phones);
 	}
 
 }
