@@ -7,6 +7,13 @@
   width: 100%;
 }
 
+.dashboard-card {
+  max-width: 4000px;
+}
+
+img {
+  background-size: cover;
+}
 .car-right-align {
   text-align: right;
 }

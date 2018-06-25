@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Service } from '../_services/service';
 import { Car } from '../_models/car';
 import { AuthenticationService } from './authentication.service';
+import { Helper } from '../_helpers/helper';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CarService {
 	token: string;
 	url = 'car/';
 
-	constructor(private service: Service, authenticationService: AuthenticationService) { 
+	constructor(private service: Service, authenticationService: AuthenticationService, private helper: Helper) { 
 		this.token = authenticationService.getToken();
 	}
 
@@ -64,7 +65,7 @@ export class CarService {
 			model: form.get('model').value,
 			manufacturer: form.get('manufacturer').value,
 			color: form.get('color').value,
-			year_manufacture: form.get('year_manufacture').value,
+			year_manufacture: this.helper.formatDate(form.get('year_manufacture').value),
 			capacity: form.get('capacity').value,
 			user_id: userId,
 		}

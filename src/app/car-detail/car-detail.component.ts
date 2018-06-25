@@ -15,8 +15,10 @@ export class CarDetailComponent implements OnInit {
 
 	car: Car;
 	errorCar = true;
+	model = '';
+	manufacturer = '';
 	error = '';
-
+	
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
@@ -38,6 +40,8 @@ export class CarDetailComponent implements OnInit {
 				data => {
 					if (data.message.type == "S") {
 						this.car = data.dataset.car;
+						this.model = this.car.model;
+						this.manufacturer = this.car.manufacturer;
 						this.errorCar = false;
 					} else {
 						this.error = data.message.text;

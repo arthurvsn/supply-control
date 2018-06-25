@@ -24,8 +24,8 @@ export class AmountControlComponent implements OnInit {
 	ngOnInit() {		
 		this.amountForm = new FormGroup({
 			amount: new FormControl({ value: this.amount, disabled: true }, [Validators.required]),
-			dateSupplyStart: new FormControl({ value: this.dateStart, disabled: true }, [Validators.required]),
-			dateSupplyEnd: new FormControl({ value: this.dateEnd, disabled: true }, [Validators.required])
+			dateSupplyStart: new FormControl({ value: this.dateStart, disabled: true }, [Validators.required, Validators.pattern("^[0-9-.]*$")]),
+			dateSupplyEnd: new FormControl({ value: this.dateEnd, disabled: true }, [Validators.required, Validators.pattern("^[0-9-.]*$")])
 		});
 	}
 
@@ -37,7 +37,11 @@ export class AmountControlComponent implements OnInit {
 		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
 			.subscribe(
 				data => {
-					this.amountForm.get('amount').setValue(data.dataset.supply.valueAmount);
+					if (data.dataset.supply.valueAmount > 0) {
+						this.amountForm.get('amount').setValue(data.dataset.supply.valueAmount);
+					} else {
+						this.amountForm.get('amount').setValue(0.00);
+					}
 				}, error => {
 					this.error = error.message;
 				}

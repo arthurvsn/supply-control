@@ -15,25 +15,18 @@
 				<mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
 				<mat-datepicker #dp3 disabled="false"></mat-datepicker>
 			</mat-form-field>
-
-			<mat-divider></mat-divider>
-
+			
 			<mat-form-field class="full-width">
 				<input matInput [matDatepicker]="dp2" placeholder="Date Emd" formControlName="dateSupplyEnd">
 				<mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
 				<mat-datepicker #dp2 disabled="false"></mat-datepicker>
 			</mat-form-field>
 
-			<mat-divider></mat-divider>
-			<br />
 			<mat-form-field class="full-width">
-				<input matInput placeholder="Amount" type="number" class="car-right-align valueAmount" formControlName="amount">
+				<input matInput placeholder="Amount" class="car-right-align valueAmount" formControlName="amount">
 				<span matPrefix class="">$&nbsp;</span>
 			</mat-form-field>
 
-			<mat-divider></mat-divider>
-			
-			<br />
 			<button mat-raised-button color="primary" (click)="filterExpenses()">Filter expenses</button>
 
 		</mat-expansion-panel>

@@ -43,7 +43,7 @@ export class CarComponent implements OnInit {
 		if (this.carForm.invalid) {
 			return;
 		}
-
+		return;
 		this.loading = true;
 		this.carService.storeCar(this.user.id, this.carForm)
 			.subscribe(

@@ -1,0 +1,12 @@
+.full-width {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width > * {
+  width: 100%;
+}
+
+.new-car-card {
+  max-width: 4000px;
+}
