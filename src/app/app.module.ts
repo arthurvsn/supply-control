@@ -2,9 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { Helper } from './_helpers/helper';
 
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
@@ -17,6 +20,11 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
+import { CarComponent } from './car/car.component';
+import { CarDetailComponent } from './car-detail/car-detail.component';
+import { SupplyComponent } from './supply/supply.component';
+import { DatePipe } from '@angular/common';
+import { AmountControlComponent } from './amount-control/amount-control.component';
 
 @NgModule({
   declarations: [
@@ -27,17 +35,25 @@ import { UserComponent } from './user/user.component';
     RegisterComponent,
     UserComponent,
     ContactComponent,
+    CarComponent,
+    CarDetailComponent,
+    SupplyComponent,
+    AmountControlComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthGuard,
     AuthenticationService,
+    DatePipe,
     Service,
+    Helper,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

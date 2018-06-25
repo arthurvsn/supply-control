@@ -1,0 +1,28 @@
+.car-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.car-container > * {
+  width: 100%;
+}
+
+.dashboard-card {
+  max-width: 4000px;
+}
+
+img {
+  background-size: cover;
+}
+.car-right-align {
+  text-align: right;
+}
+
+input.car-right-align::-webkit-outer-spin-button,
+input.car-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.car-right-align {
+  -moz-appearance: textfield;
+}

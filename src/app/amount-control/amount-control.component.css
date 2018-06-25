@@ -1,3 +1,8 @@
+.valueAmount {
+    font-size: 3em;
+    color: chartreuse;
+}
+
 .full-width {
   display: flex;
   flex-direction: column;
@@ -5,8 +10,4 @@
 
 .full-width > * {
   width: 100%;
-}
-
-.new-user-card {
-  max-width: 4000px;
 }

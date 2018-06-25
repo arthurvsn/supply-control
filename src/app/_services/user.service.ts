@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
@@ -13,7 +11,7 @@ import 'rxjs/RX';
 import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
-import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs/RX';
 
 @Injectable()
 
@@ -64,16 +62,24 @@ export class UserService {
         return body;
     }
 
-    getAddress(zipcode: string) {
-        let url = 'http://viacep.com.br/ws/' + zipcode + '/json/';
-        return this.http.get<any>(url);
+    getAddress(zipcode: string): Observable<any> {
+        let headers = new HttpHeaders().delete('token');
+        
+        let options = { headers: headers };
+
+        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`, options);
     }
 
     getAll() {
         return this.http.get<any>(this.urlApi + 'user');
     }
 
-    getUserLogged(): any {        
+    validateToken(): any {
+        if (!this.token) { return; }
+        return this.service.ping(this.token);
+    }
+
+    getUserLogged(): any {
         if (localStorage.getItem('currentUser')) {
             let user = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -101,5 +107,12 @@ export class UserService {
         let body = this.createBodyUser(form);
 
         return this.service.update(url, body, this.token);
+    }
+
+    deleteUser(id: number) {
+
+        let url = this.url + id;
+
+        return this.service.delete(url, this.token);
     }
 }

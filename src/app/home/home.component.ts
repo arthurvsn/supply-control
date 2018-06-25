@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { first } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-import { tap, delay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
+import { CarService } from '../_services/car.service';
+import { User } from '../_models/user';
+import { Car } from "../_models/car";
 
 @Component({
   selector: 'app-home',
@@ -14,39 +13,37 @@ import { UserService } from '../_services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-	users: User[] = [];
-	isLogged: boolean;
+	cars: Car[] = [];
 	user: User;
-
+	isLogged: boolean;
+	/*ng g c new-component --module app*/
 	constructor(
 		private userService: UserService, 
+		private carService: CarService,
 		private router: Router) {  }
 	
   	ngOnInit() {
-			
-		/* this.userService.getAll()
-			.pipe(first())
-			.subscribe(users => {
-				this.users = users.dataset.user;
-		}); */
-
 		this.getUserLogged();
+		this.getCars();
 	}
 	  
-	getUserLogged(): void {
-		
+	getUserLogged(): void {		
 		this.user = this.userService.getUserLogged();
-		/* this.userService.getUserLogged()
-			.subscribe(data => {
-				
-				if (data.message.type == "S") {
-					this.user = data.dataset.user;
-				}
-			},
-			error => console.log(error)
-		); */
 	}
 
+	getCars(): void {
+		this.carService.getAllCarsByUser(this.user.id)
+			.subscribe(
+				cars => {
+					if(cars.message.type == "S") {
+						this.cars = cars.dataset.cars;
+					}
+				}, error => {
+					console.error(error)
+				}
+			);
+	}
+	
 	getInfoCar(id: number) {
 		alert(id);
 	}

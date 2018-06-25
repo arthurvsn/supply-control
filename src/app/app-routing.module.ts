@@ -8,6 +8,8 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { UserComponent } from "./user/user.component";
 import { ContactComponent } from "./contact/contact.component";
+import { CarComponent } from './car/car.component';
+import { CarDetailComponent } from './car-detail/car-detail.component';
 
 const routes: Routes = [
   /* { path: '', component: AppComponent }, */
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'logout', component: LoginComponent },
   { path: 'profile', component: UserComponent },
+  { path: 'car', component: CarComponent },
+  { path: 'car/detail/:id', component: CarDetailComponent },
 ];
 
 @NgModule({

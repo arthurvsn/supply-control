@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+
 import { RegisterService } from "../_services/register.service";
 import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
@@ -12,9 +13,11 @@ function passwordConfirming(c: AbstractControl): any {
 	const cpwd = c.parent.get('confirmedPassword');
 
 	if (!pwd || !cpwd) return;
+	
 	if (pwd.value !== cpwd.value) {
-		return { invalid: true };
-
+		return { 
+			invalid: true 
+		};
 	}
 }
 @Component({

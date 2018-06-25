@@ -1,0 +1,21 @@
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+.full-width {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width > * {
+  width: 100%;
+}
+
+.new-user-card {
+  max-width: 4000px;
+}
