@@ -2,3 +2,13 @@
     font-size: 3em;
     color: chartreuse;
 }
+
+
+.full-width {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width > * {
+  width: 100%;
+}

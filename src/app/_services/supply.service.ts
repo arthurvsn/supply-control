@@ -27,7 +27,7 @@ export class SupplyService {
 	getAmountSupply(dateFilterStar: string, dateFilterEnd: string, carID: number) {
 
 		let newUrl = this.url + '/' + dateFilterStar + '/' + dateFilterEnd + '/' + carID;
-
+		
 		return this.service.get(newUrl, this.token);
 	}
 

@@ -37,11 +37,11 @@ export class AmountControlComponent implements OnInit {
 		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
 			.subscribe(
 				data => {
-					this.amountForm.get('amount').setValue(data.dataset.supply.value);
+					this.amountForm.get('amount').setValue(data.dataset.supply.valueAmount);
 				}, error => {
 					this.error = error.message;
 				}
-		);		
+			);
 	}
 
 }
