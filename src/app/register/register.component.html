@@ -1,84 +1,165 @@
 <div class="container">
 	<div class="row">
-		<div class="col-12">
-			<h3>Register</h3>
-
-			<br />
-			<h3>User</h3>
+		<div class="col-12">			
 			<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-				<div class="form-row">
-					<div class="col-md-3 mb-3">
-						<label for="name">Name</label>
-						<input type="text" class="form-control" id="name" placeholder="Name" placeholder="Name"
-						 formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
+				<mat-card class="new-user-card">
+					<mat-card-title>Register</mat-card-title>
+					<mat-accordion>
+						<mat-expansion-panel>
+							<mat-expansion-panel-header>
+								<mat-panel-title>
+									<mat-icon>person</mat-icon>
+								</mat-panel-title>
+								<mat-panel-description>
+									User data
+								</mat-panel-description>
+							</mat-expansion-panel-header>
 
-						<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-							<div *ngIf="f.name.errors.required">Name is required</div>
-						</div>
-					</div>
+							<mat-form-field class="full-width">
+								<input matInput placeholder="Enter your name" formControlName="name" class="text-align" [ngClass]="{'is-invalid': submitted && f.name.errors}">
+								<span matSuffix><mat-icon> sentiment_satisfied_alt</mat-icon></span>
+								<mat-error *ngIf="submitted && f.name.errors">
+									<mat-error *ngIf="f.name.errors.required">Name is required</mat-error>
+									<mat-error *ngIf="f.name.errors.maxLength">Max characters</mat-error>
+								</mat-error>
+							</mat-form-field>
 
-					<div class="col-md-3 mb-3">
-						<label for="username">Username</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="username" placeholder="Username" aria-describedby="inputGroupPrepend" 
-							formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required>
-						</div>
-						<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-							<div *ngIf="f.username.errors.required">Username is required</div>
-						</div>
-					</div>
+							<mat-form-field class="full-width">
+								<input matInput placeholder="Enter your username" formControlName="username" class="text-align" [ngClass]="{'is-invalid': submitted && f.username.errors}">
+								<span matSuffix>
+									<mat-icon> sentiment_satisfied_alt</mat-icon>
+								</span>
+								<mat-error *ngIf="submitted && f.username.errors">
+									<mat-error *ngIf="f.username.errors.required">Username is required</mat-error>
+								</mat-error>
+							</mat-form-field>
 
-					<div class="col-md-3 mb-3">
-						<label for="email">Email</label>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroupPrepend">@</span>
-							</div>
-							<input type="text" class="form-control" id="email" placeholder="E-mail" aria-describedby="inputGroupPrepend"
-								formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
-							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-								<div *ngIf="f.email.errors.required">E-mail is required</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3 mb-3">
-						<label for="password">Password</label>
-						<input type="password" id="password" formControlName="password" class="form-control" 
-						[ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-						<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-							<div *ngIf="f.password.errors.required">Password is required</div>
-						</div>
-					</div>
-					<div class="col-md-3 mb-3">
-						<label for="confirmedPassword">Repeat your password</label>
-						<input type="password" id="confirmedPassword" formControlName="confirmedPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmedPassword.errors }">
-						<div class="invalid-feedback" *ngIf="cpwd.hasError('invalid')"> Invalid Password </div>
-						<div *ngIf="submitted && f.confirmedPassword.errors" class="invalid-feedback">
-							<div *ngIf="f.confirmedPassword.errors.required">Confirmed password is required</div>
-						</div>
-					</div>
-				</div>
+							<mat-form-field class="full-width">
+								<input matInput placeholder="Enter your email" formControlName="email" class="text-align" [ngClass]="{'is-invalid': submitted && f.email.errors}">
+								<span matSuffix>
+									<mat-icon>@</mat-icon>
+								</span>
+								<mat-error *ngIf="submitted && f.email.errors">
+									<mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+								</mat-error>
+							</mat-form-field>
 
-				<h3>Address</h3>
-				<div class="form-row">
-					<div class="col-md-3 mb-3">
+							<mat-form-field class="full-width">
+								<input matInput placeholder="Enter your password" formControlName="password" class="text-align"
+								[ngClass]="{'is-invalid': submitted && f.password.errors}" [type]="!hide ? 'password' : 'text'">
+								<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+								<mat-error *ngIf="submitted && f.password.errors">
+									<mat-error *ngIf="f.password.errors.required">Password is required</mat-error>
+								</mat-error>
+							</mat-form-field>
 
-						<label for="zipcode">Zipcode</label>
-						<input type="text" id="zipcode" formControlName="zipcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" #zipcodeInput
-						placeholder="Zip Code" required (change)="seacrchAddress(zipcodeInput.value)">
-						<div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
-							<div *ngIf="f.zipcode.errors.required">ZipCode is required to complet your address.</div>
-						</div>
-						<div *ngIf="errorAddress" class="alert alert-danger">{{ errorAddress }}</div>
-					</div>
+							<mat-form-field class="full-width">
+								<input matInput placeholder="Confirm your password" formControlName="confirmedPassword" class="text-align" 
+								[ngClass]="{'is-invalid': submitted && f.confirmedPassword.errors}" [type]="!hide1 ? 'password' : 'text'">
+								<mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility' : 'visibility_off'}}</mat-icon>
+								<mat-error *ngIf="submitted && f.confirmedPassword.errors">
+									<mat-error *ngIf="cpwd.hasError('invalid')">Invalid Password</mat-error>
+									<mat-error *ngIf="f.confirmedPassword.errors.required">Password is required</mat-error>
+								</mat-error>
+							</mat-form-field>
 
-					<div class="col-md-3 mb-3">
-						<label for="street">street</label>
-						<input type="text" id="street" formControlName="street" class="form-control" 
-						[ngClass]="{ 'is-invalid': submitted && f.street.errors }" placeholder="Street">
+						</mat-expansion-panel>
+					</mat-accordion>
+
+					<mat-expansion-panel>
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								<mat-icon>location_on</mat-icon>
+							</mat-panel-title>
+							<mat-panel-description>
+								User address
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Enter your zipcode" formControlName="zipcode" class="text-align" [ngClass]="{'is-invalid': submitted && f.zipcode.errors}" #zipcodeInput (change)="seacrchAddress(zipcodeInput.value)">
+							<span matSuffix>
+								<mat-icon>code</mat-icon>
+							</span>
+							<mat-error *ngIf="submitted && f.zipcode.errors">
+								<mat-error *ngIf="f.zipcode.errors.required">ZipCode is required to complet your address.</mat-error>
+								<mat-error *ngIf="f.zipcode.errors.maxLength">Max characters</mat-error>
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Your street" formControlName="street" class="text-align" [ngClass]="{'is-invalid': submitted && f.street.errors}">
+							<span matSuffix>
+								<mat-icon>home</mat-icon>
+							</span>
+						</mat-form-field>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Your country" formControlName="country" class="text-align" [ngClass]="{'is-invalid': submitted && f.country.errors}">
+							<span matSuffix>
+								<mat-icon>home</mat-icon>
+							</span>
+						</mat-form-field>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Your state" formControlName="state" class="text-align" [ngClass]="{'is-invalid': submitted && f.state.errors}">
+							<span matSuffix>
+								<mat-icon>home</mat-icon>
+							</span>
+						</mat-form-field>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Your city" formControlName="city" class="text-align" [ngClass]="{'is-invalid': submitted && f.city.errors}">
+							<span matSuffix>
+								<mat-icon>home</mat-icon>
+							</span>
+						</mat-form-field>
+
+					</mat-expansion-panel>
+
+					<mat-expansion-panel>
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								<mat-icon>contact_phone</mat-icon>
+							</mat-panel-title>
+							<mat-panel-description>
+								User Phone
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Enter your code country phone" formControlName="code" class="text-align" [ngClass]="{'is-invalid': submitted && f.code.errors}">
+							<span matSuffix>
+								<mat-icon>attachment</mat-icon>
+							</span>
+							<mat-error *ngIf="submitted && f.code.errors">
+								<mat-error *ngIf="f.code.errors.required">Code country phone is required</mat-error>
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Enter your phone number" formControlName="phone" [ngClass]="{'is-invalid': submitted && f.phone.errors}">
+							<span matSuffix>
+								<mat-icon>phone</mat-icon>
+							</span>
+							<mat-error *ngIf="submitted && f.phone.errors">
+								<mat-error *ngIf="f.phone.errors.required">Phone number is required</mat-error>
+							</mat-error>
+						</mat-form-field>
+
+					</mat-expansion-panel>
+
+					<br />
+					<div class="form-group">
+						<button mat-raised-button color="primary" [disabled]="loading" class="btn btn-primary">Register</button>
+						<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+						/>
 					</div>
+					
+					<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+				</mat-card>
+			</form>
+			<!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
 					<div class="col-md-2 mb-3">
 						<label for="country">Country</label>
@@ -127,7 +208,7 @@
 					/>
 				</div>
 				<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-			</form>
+			</form>-->
 		</div>
 	</div>
 </div>

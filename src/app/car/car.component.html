@@ -1,13 +1,21 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-			<mat-card-title>New Vehicle</mat-card-title>
-
-			<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+			
+			<form [formGroup]="carForm" (ngSubmit)="onSubmit()">				
 				<mat-card class="new-car-card">
-
+					
+					<mat-card-title>
+						New Vehicle
+						<span matSuffix>
+							<mat-icon>directions_car</mat-icon>
+						</span>
+					</mat-card-title>
 					<mat-form-field class="full-width">
 						<input matInput placeholder="Enter board vehicle" formControlName="board" class="text-align" [ngClass]="{'is-invalid': submitted && f.board.errors}">
+						<span matSuffix>
+							<mat-icon>list</mat-icon>
+						</span>
 						<mat-error *ngIf="submitted && f.board.errors">
 							<mat-error *ngIf="f.board.errors.required">Board is required</mat-error>
 							<mat-error *ngIf="f.board.errors.maxLength">Max characters</mat-error>
@@ -16,6 +24,9 @@
 
 					<mat-form-field class="full-width">
 						<input matInput placeholder="Enter model vehicle" formControlName="model" class="text-align" [ngClass]="{'is-invalid': submitted && f.model.errors}">
+						<span matSuffix>
+							<mat-icon>list</mat-icon>
+						</span>
 						<mat-error *ngIf="submitted && f.model.errors">
 							<mat-error *ngIf="f.model.errors.required">Model is required</mat-error>
 						</mat-error>
@@ -23,6 +34,9 @@
 
 					<mat-form-field class="full-width">
 						<input matInput placeholder="Enter manufacturer vehicle" formControlName="manufacturer" class="text-align" [ngClass]="{'is-invalid': submitted && f.manufacturer.errors}">
+						<span matSuffix>
+							<mat-icon>list</mat-icon>
+						</span>
 						<mat-error *ngIf="submitted && f.manufacturer.errors">
 							<mat-error *ngIf="f.manufacturer.errors.required">Manufacturer is required</mat-error>
 						</mat-error>
@@ -30,6 +44,9 @@
 
 					<mat-form-field class="full-width">
 						<input matInput placeholder="Enter color vehicle" formControlName="color" class="text-align" [ngClass]="{'is-invalid': submitted && f.color.errors}">
+						<span matSuffix>
+							<mat-icon>color_lens</mat-icon>
+						</span>
 						<mat-error *ngIf="submitted && f.color.errors">
 							<mat-error *ngIf="f.color.errors.required">Color is required</mat-error>
 						</mat-error>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 import { SupplyService } from '../_services/supply.service';
+import { Helper } from '../_helpers/helper';
 
 @Component({
   selector: 'app-supply',
@@ -18,7 +19,7 @@ export class SupplyComponent implements OnInit {
 	date = new Date();
 	loading = false;
 
-	constructor(private route: ActivatedRoute, private supplyService: SupplyService, private snackBar: MatSnackBar) { }
+	constructor(private route: ActivatedRoute, private supplyService: SupplyService, private helper: Helper) { }
 
 	ngOnInit() {
 		this.supplyForm = new FormGroup({
@@ -46,18 +47,11 @@ export class SupplyComponent implements OnInit {
 		this.supplyService.saveSupply(this.supplyForm, carID)
 			.subscribe(
 				supply => {
-					this.openSnackBar(supply.message.text, supply.message.type)
+					this.helper.openSnackBar(supply.message.text, supply.message.type)
 				}, error => {
-					this.openSnackBar("Error to save new supply, why: " + error, "ERROR")
+					this.helper.openSnackBar("Error to save new supply, why: " + error, "ERROR")
 					console.error(error)
 				}
 			);
-	}
-
-	openSnackBar(message: string, action: string) {
-		this.snackBar.open(message, action, {
-			duration: 2000,
-		});
-		window.location.reload();
 	}
 }

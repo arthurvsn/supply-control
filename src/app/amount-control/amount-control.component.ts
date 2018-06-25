@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 
 import { SupplyService } from '../_services/supply.service';
 import { Helper } from "../_helpers/helper";
@@ -32,6 +31,11 @@ export class AmountControlComponent implements OnInit {
 	filterExpenses() {
 		let dateSupplyStart = this.helper.formatDate(this.amountForm.get('dateSupplyStart').value);
 		let dateSupplyEnd = this.helper.formatDate(this.amountForm.get('dateSupplyEnd').value);
+
+		if (dateSupplyEnd < dateSupplyStart) {
+			this.helper.openSnackBar("Final date greater than initial date", "False");
+			return;
+		}
 		let carID = +this.route.snapshot.paramMap.get('id');
 		
 		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
