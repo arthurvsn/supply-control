@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/RX';
 import { FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -8,10 +9,9 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/RX';
 
-import { User } from '../_models/user';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
-import { Observable } from 'rxjs/RX';
+import { User } from '../_models/user';
 
 @Injectable()
 
@@ -25,41 +25,10 @@ export class UserService {
     headers = new HttpHeaders().set('token', this.token );
     options = { headers: this.headers };
     
-    constructor(private http: HttpClient, authenticationService: AuthenticationService, private service: Service) {
-        this.token = authenticationService.getToken();
-    }
-    
-    private createBodyUser(form: FormGroup) {
-        
-        let objAdress = {
-            street: form.get('street').value,
-            city: form.get('city').value,
-            state: form.get('state').value,
-            zip_code: form.get('zipcode').value,
-            country: form.get('country').value,
-        };
-
-        let objPhone = {
-            country_code: form.get('code').value,
-            number: form.get('phone').value,
-        };
-
-        let body = {
-            name: form.get('name').value,
-            username: form.get('username').value,
-            email: form.get('email').value,
-            profile_picture: "teste",
-            password: form.get('password').value,
-            user_type: "ARTIST",
-            addresses: [
-                objAdress
-            ],
-            phones: [
-                objPhone
-            ]
-        };
-
-        return body;
+    constructor(private http: HttpClient, 
+                private authenticationService: AuthenticationService, 
+                private service: Service) {
+        this.token = this.authenticationService.getToken();
     }
 
     getAddress(zipcode: string): Observable<any> {
@@ -92,12 +61,20 @@ export class UserService {
     }
 
     getUser(id: number) {
+
         let url = this.url + id;
+
         return this.service.get(url, this.token);
     }
 
-    storeUser(body: any) {
-        let url = 'store';
+    storeUser(form: FormGroup) {
+
+        let url = 'register';
+
+        let body = this.createBodyUser(form);
+
+        return this.service.post(url, body, '');
+        
     }
 
     updateUser(id: number, form: FormGroup) {
@@ -114,5 +91,37 @@ export class UserService {
         let url = this.url + id;
 
         return this.service.delete(url, this.token);
+    }
+
+    private createBodyUser(form: FormGroup) {
+
+        let objAdress = {
+            street: form.get('street').value,
+            city: form.get('city').value,
+            state: form.get('state').value,
+            zip_code: form.get('zipcode').value,
+            country: form.get('country').value,
+        };
+
+        let objPhone = {
+            country_code: form.get('code').value,
+            number: form.get('phone').value,
+        };
+
+        let body = {
+            name: form.get('name').value,
+            username: form.get('username').value,
+            email: form.get('email').value,
+            profile_picture: "teste",
+            password: form.get('password').value,
+            addresses: [
+                objAdress
+            ],
+            phones: [
+                objPhone
+            ]
+        };
+
+        return body;
     }
 }

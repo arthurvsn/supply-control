@@ -110,7 +110,17 @@ export class UserComponent implements OnInit {
 
 	deletProfile() {
 		if (confirm("Are you sure to delete your profile?")) {
-			alert(this.user.id);
+			this.userService.deleteUser(this.user.id)
+				.subscribe(
+					data => {
+						this.helper.openSnackBar(data.message.text, data.message.type);
+						if(data.message.type == "S") {
+							this.router.navigate(['/login']);
+						}
+					}, error => {
+						this.helper.openSnackBar(error, "ERROR");
+					}
+				)
 		}
 	}
 

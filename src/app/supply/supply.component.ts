@@ -33,6 +33,7 @@ export class SupplyComponent implements OnInit {
 	onSubmit() {
 		this.loading = true;
 		this.saveSuply();
+		this.loading = false;
 	}
 
 	// convenience getter for easy access to form fields

@@ -3,9 +3,9 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { RegisterService } from "../_services/register.service";
 import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
+import { Helper } from '../_helpers/helper';
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -39,14 +39,15 @@ export class RegisterComponent implements OnInit {
 		return this.registerForm.get('confirmedPassword');
 	}
 
-	constructor(private registerService: RegisterService,
-				private router: Router,
-				private userService: UserService) {	}
+	constructor(private router: Router,
+				private userService: UserService,
+				private helper: Helper) {	}
 	
 	ngOnInit() {
 		this.registerForm = new FormGroup({
 			name: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
 			username: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
+			profile_picture: new FormControl(null, [Validators.required]),
 			email: new FormControl(null, [Validators.required, Validators.email, Validators.minLength(5)]),
 			password: new FormControl(null, [Validators.required]),
 			confirmedPassword: new FormControl(null, [Validators.required, passwordConfirming]),
@@ -69,14 +70,15 @@ export class RegisterComponent implements OnInit {
 		}
 		this.loading = true;
 
-		this.registerService.saveNewUser(this.registerForm)
+		this.userService.storeUser(this.registerForm)
 			.pipe(first())
 			.subscribe(
 				data => {
-					if (data) {
+					if(data.message.type == 'S') {
+						this.helper.openSnackBar(data.message.text, data.message.type);
 						this.router.navigate([this.returnUrl]);
 					} else {
-						this.error = "Erro on register";
+						this.helper.openSnackBar("Error on register", data.message.type);
 						this.loading = false;
 					}
 				},

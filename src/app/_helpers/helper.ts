@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Injectable()
 
 export class Helper  {
 
-    constructor(private datePipe: DatePipe, private snackBar: MatSnackBar) { }
+    constructor(private datePipe: DatePipe, 
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog) { }
 
     formatDate(date: string) {
         return this.datePipe.transform(date, "yyyy-MM-dd");

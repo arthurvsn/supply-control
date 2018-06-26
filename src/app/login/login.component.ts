@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from "../_services/authentication.service";
+import { Helper } from '../_helpers/helper';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 	constructor(private route: ActivatedRoute,
 				private router: Router,
 				private authenticationService: AuthenticationService,
-	) { }
+				private helper: Helper) { }
 
 	ngOnInit() {
 		this.loginForm = new FormGroup({
