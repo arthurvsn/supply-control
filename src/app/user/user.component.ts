@@ -158,6 +158,7 @@ export class UserComponent implements OnInit {
 		this.userForm.get('city').setValue(address.city);
 		this.userForm.get('country').setValue(address.country);
 		this.userForm.get('state').setValue(address.state);
+		this.userForm.get('number').setValue(address.number);
 	}
 
 	private setPhonesForm(phone: Phone) {
