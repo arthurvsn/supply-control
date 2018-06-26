@@ -59,6 +59,7 @@ export class UserComponent implements OnInit {
 			city: new FormControl({ value: null, disabled: true }, [Validators.required]),
 			state: new FormControl({ value: null, disabled: true }, [Validators.required]),
 			country: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			number: new FormControl(null, [Validators.required]),
 			code: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
 			phone: new FormControl(null, [Validators.required]),
 		});
@@ -86,6 +87,7 @@ export class UserComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.userForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
 

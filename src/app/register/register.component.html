@@ -118,6 +118,16 @@
 							</span>
 						</mat-form-field>
 
+						<mat-form-field class="full-width">
+							<input matInput placeholder="Enter your home number" formControlName="number" class="text-align" [ngClass]="{'is-invalid': submitted && f.number.errors}">
+							<span matSuffix>
+								<mat-icon>attachment</mat-icon>
+							</span>
+							<mat-error *ngIf="submitted && f.number.errors">
+								<mat-error *ngIf="f.number.errors.required">Number is required.</mat-error>
+							</mat-error>
+						</mat-form-field>
+
 					</mat-expansion-panel>
 
 					<mat-expansion-panel>

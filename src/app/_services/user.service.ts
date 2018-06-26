@@ -101,6 +101,7 @@ export class UserService {
             state: form.get('state').value,
             zip_code: form.get('zipcode').value,
             country: form.get('country').value,
+            number: form.get('number').value,
         };
 
         let objPhone = {

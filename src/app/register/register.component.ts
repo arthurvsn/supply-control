@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit {
 			city: new FormControl({value: null, disabled: true}, [Validators.required]),
 			state: new FormControl({value: null, disabled: true}, [Validators.required]),
 			country: new FormControl({value: null, disabled: true}, [Validators.required]),
+			number: new FormControl(null, [Validators.required]),
 			code: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
 			phone: new FormControl(null, [Validators.required]),
 		});
@@ -66,6 +67,7 @@ export class RegisterComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.registerForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
 		this.loading = true;

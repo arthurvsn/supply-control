@@ -45,6 +45,7 @@ export class CarComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.carForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
 		
