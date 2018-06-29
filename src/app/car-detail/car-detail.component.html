@@ -7,12 +7,16 @@
 					<img mat-card-avatar src='https://material.angular.io/assets/img/examples/shiba1.jpg'>
 					<mat-card-title>{{ model }}</mat-card-title>
 					<mat-card-subtitle>{{ manufacturer }}</mat-card-subtitle>
-				</mat-card-header>
+				</mat-card-header>			
 
-				<app-supply></app-supply>
+				<app-amount-control></app-amount-control>				
 				<br />
-				<app-amount-control></app-amount-control>
+				<app-supply></app-supply>				
 				<!-- https://material.io/tools/icons/?icon=attach_money&style=baseline -->
+
+				<mat-card-actions>
+					<button mat-raised-button (click)="goBack()">Back</button>
+				</mat-card-actions>
 			</mat-card>
 		</div>
 	</div>

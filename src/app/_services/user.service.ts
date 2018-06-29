@@ -22,21 +22,15 @@ export class UserService {
     isLogged = false;
     user: User;
     token: any;
-    headers = new HttpHeaders().set('token', this.token );
-    options = { headers: this.headers };
     
-    constructor(private http: HttpClient, 
-                private authenticationService: AuthenticationService, 
+    constructor(private http: HttpClient,
+                private authenticationService: AuthenticationService,
                 private service: Service) {
         this.token = this.authenticationService.getToken();
     }
 
     getAddress(zipcode: string): Observable<any> {
-        let headers = new HttpHeaders().delete('token');
-        
-        let options = { headers: headers };
-
-        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`, options);
+        return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`);
     }
 
     getAll() {
