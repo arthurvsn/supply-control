@@ -38,7 +38,9 @@ export class UserService {
     }
 
     validateToken(): any {
-        if (!this.token) { return; }
+        if (!this.token) { 
+            return; 
+        }
         return this.service.ping(this.token);
     }
 
