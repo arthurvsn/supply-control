@@ -28,7 +28,7 @@ export class Service {
             .pipe(
                 tap(_ => this.log(`GET url' = ${newUrl}`)),
                 catchError(this.handleError<any>(`Error GET url = ${newUrl}`))
-            );;
+            );
     }
 
     get(url: string, token: any): Observable<any> {

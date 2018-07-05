@@ -10,6 +10,8 @@ import { UserComponent } from "./user/user.component";
 import { ContactComponent } from "./contact/contact.component";
 import { CarComponent } from './car/car.component';
 import { CarDetailComponent } from './car-detail/car-detail.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
   /* { path: '', component: AppComponent }, */
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'profile', component: UserComponent },
   { path: 'car', component: CarComponent },
   { path: 'car/detail/:id', component: CarDetailComponent },
+  { path: 'password/recovery', component: PasswordRecoveryComponent },
+  { path: 'password/reset/:token', component: PasswordResetComponent },
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@ import { CarService } from '../_services/car.service';
 import { UserService } from '../_services/user.service';
 import { Car } from "../_models/car";
 import { User } from '../_models/user';
+import { Helper } from '../_helpers/helper';
 
 @Component({
   selector: 'app-car',
@@ -21,7 +22,10 @@ export class CarComponent implements OnInit {
 	submitted = false;
 	loading = false;
 
-	constructor(private carService: CarService, private userService: UserService, private router: Router) { }
+	constructor(private carService: CarService, 
+		private userService: UserService, 
+		private router: Router,
+		private helper: Helper) { }
 
 	ngOnInit() {
 		this.carForm = new FormGroup({
@@ -41,21 +45,23 @@ export class CarComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.carForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
-		return;
+		
 		this.loading = true;
 		this.carService.storeCar(this.user.id, this.carForm)
 			.subscribe(
 				data => {
 					if (data.message.type == "S") {
+						this.helper.openSnackBar(data.message.text, data.message.type);
 						this.router.navigate(['/dashboard']);
 					} else {
-						this.error = "Erro to save new car and " + data.message.type;
 						this.loading = false;
+						this.helper.openSnackBar("Erro to save new car and " + data.message.type, "ERROR");
 					}
 				}, error => {
-					console.error(error);					
+					console.error(error);	
 					this.error = error;
 				}
 			);

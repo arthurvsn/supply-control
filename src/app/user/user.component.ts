@@ -59,6 +59,7 @@ export class UserComponent implements OnInit {
 			city: new FormControl({ value: null, disabled: true }, [Validators.required]),
 			state: new FormControl({ value: null, disabled: true }, [Validators.required]),
 			country: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			number: new FormControl(null, [Validators.required]),
 			code: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
 			phone: new FormControl(null, [Validators.required]),
 		});
@@ -86,6 +87,7 @@ export class UserComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.userForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
 
@@ -110,7 +112,17 @@ export class UserComponent implements OnInit {
 
 	deletProfile() {
 		if (confirm("Are you sure to delete your profile?")) {
-			alert(this.user.id);
+			this.userService.deleteUser(this.user.id)
+				.subscribe(
+					data => {
+						this.helper.openSnackBar(data.message.text, data.message.type);
+						if(data.message.type == "S") {
+							this.router.navigate(['/login']);
+						}
+					}, error => {
+						this.helper.openSnackBar(error, "ERROR");
+					}
+				)
 		}
 	}
 
@@ -146,6 +158,7 @@ export class UserComponent implements OnInit {
 		this.userForm.get('city').setValue(address.city);
 		this.userForm.get('country').setValue(address.country);
 		this.userForm.get('state').setValue(address.state);
+		this.userForm.get('number').setValue(address.number);
 	}
 
 	private setPhonesForm(phone: Phone) {

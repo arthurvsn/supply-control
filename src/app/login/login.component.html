@@ -7,9 +7,10 @@
 					<mat-form-field>
 						<input matInput placeholder="Enter your username" formControlName="username" class="text-align"
 						[ngClass]="{'is-invalid': submitted && f.username.errors}">
+						<span matSuffix><mat-icon>person</mat-icon></span>
 						<mat-error *ngIf="submitted && f.username.errors">Username is required</mat-error>
 					</mat-form-field>
-					<br />
+					
 					<mat-form-field>
 						<input matInput placeholder="Enter your password" [type]="!hide ? 'password' : 'text'" formControlName="password"
 						[ngClass]="{ 'is-invalid': submitted && f.password.errors }">
@@ -24,6 +25,10 @@
 				</div>
 				<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 			</form>
+
+			<a class="btn btn-link" routerLink="/password/recovery">
+				Forgot Your Password?
+			</a>
 			<span class="done">
 				<button mat-fab color="primary">
 					<mat-icon routerLink="/register">person_add</mat-icon>

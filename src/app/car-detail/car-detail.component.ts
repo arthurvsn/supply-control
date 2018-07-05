@@ -29,7 +29,7 @@ export class CarDetailComponent implements OnInit {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.getDetailCar(id);
 	}
-
+	
 	goBack(): void {
 		this.location.back();
 	}
@@ -42,7 +42,7 @@ export class CarDetailComponent implements OnInit {
 						this.car = data.dataset.car;
 						this.model = this.car.model;
 						this.manufacturer = this.car.manufacturer;
-						this.errorCar = false;
+							this.errorCar = false;
 					} else {
 						this.error = data.message.text;
 					}

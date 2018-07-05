@@ -8,7 +8,7 @@ import { Helper } from '../_helpers/helper';
 @Component({
   selector: 'app-supply',
   templateUrl: './supply.component.html',
-  styleUrls: ['./supply.component.css']
+  styleUrls: ['./supply.component.css'],
 })
 export class SupplyComponent implements OnInit {
 
@@ -33,11 +33,34 @@ export class SupplyComponent implements OnInit {
 	onSubmit() {
 		this.loading = true;
 		this.saveSuply();
+		this.loading = false;
 	}
 
 	// convenience getter for easy access to form fields
 	get f() {
 		return this.supplyForm.controls;
+	}
+
+	insertValueAuto(liters, amount, price) {
+
+		/* if (liters != "" || amount != "" || price != "") {
+			return;
+		} */
+
+		let valueCalc = 0.00;
+
+		if (liters == "" && amount != "" && price != "") {
+			valueCalc = amount / price;
+			this.supplyForm.get('liters').setValue(valueCalc.toFixed(2));
+		} else if (amount == "" && liters != "" && price != "") {
+			valueCalc = liters * price;
+			this.supplyForm.get('amount').setValue(valueCalc.toFixed(2));
+		} else if (price == "" && amount != "" && liters != "") {
+			valueCalc = amount / liters;
+			this.supplyForm.get('price').setValue(valueCalc.toFixed(2));
+		} else {
+			return;
+		}
 	}
 
 	saveSuply() {

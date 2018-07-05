@@ -25,6 +25,10 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
 import { SupplyComponent } from './supply/supply.component';
 import { DatePipe } from '@angular/common';
 import { AmountControlComponent } from './amount-control/amount-control.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { AmountControlComponent } from './amount-control/amount-control.componen
     CarDetailComponent,
     SupplyComponent,
     AmountControlComponent,
+    ConfirmationDialogComponent,
+    PasswordRecoveryComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,8 @@ import { AmountControlComponent } from './amount-control/amount-control.componen
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [
     AuthGuard,
@@ -60,7 +68,7 @@ import { AmountControlComponent } from './amount-control/amount-control.componen
       useClass: JwtInterceptor,
       multi: true
     },
-  ],
-  bootstrap: [AppComponent]
+  ],  
+  bootstrap: [AppComponent]  
 })
 export class AppModule { }

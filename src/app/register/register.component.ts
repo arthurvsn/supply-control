@@ -3,9 +3,9 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { RegisterService } from "../_services/register.service";
 import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
+import { Helper } from '../_helpers/helper';
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -39,9 +39,9 @@ export class RegisterComponent implements OnInit {
 		return this.registerForm.get('confirmedPassword');
 	}
 
-	constructor(private registerService: RegisterService,
-				private router: Router,
-				private userService: UserService) {	}
+	constructor(private router: Router,
+				private userService: UserService,
+				private helper: Helper) {	}
 	
 	ngOnInit() {
 		this.registerForm = new FormGroup({
@@ -51,10 +51,11 @@ export class RegisterComponent implements OnInit {
 			password: new FormControl(null, [Validators.required]),
 			confirmedPassword: new FormControl(null, [Validators.required, passwordConfirming]),
 			zipcode: new FormControl(null, [Validators.required]),
-			street: new FormControl({value: null, disabled: true}, [Validators.required]),
-			city: new FormControl({value: null, disabled: true}, [Validators.required]),
-			state: new FormControl({value: null, disabled: true}, [Validators.required]),
-			country: new FormControl({value: null, disabled: true}, [Validators.required]),
+			street: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			city: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			state: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			country: new FormControl({ value: null, disabled: true }, [Validators.required]),
+			number: new FormControl(null, [Validators.required]),
 			code: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
 			phone: new FormControl(null, [Validators.required]),
 		});
@@ -65,18 +66,20 @@ export class RegisterComponent implements OnInit {
 		this.submitted = true;
 		// stop here if form is invalid
 		if (this.registerForm.invalid) {
+			this.helper.openSnackBar("Error filling out form", "ERROR");
 			return;
 		}
 		this.loading = true;
 
-		this.registerService.saveNewUser(this.registerForm)
+		this.userService.storeUser(this.registerForm)
 			.pipe(first())
 			.subscribe(
 				data => {
-					if (data) {
+					if(data.message.type == 'S') {
+						this.helper.openSnackBar(data.message.text, data.message.type);
 						this.router.navigate([this.returnUrl]);
 					} else {
-						this.error = "Erro on register";
+						this.helper.openSnackBar("Error on register", data.message.type);
 						this.loading = false;
 					}
 				},
