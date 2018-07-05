@@ -25,6 +25,10 @@
 				</div>
 				<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 			</form>
+
+			<a class="btn btn-link" routerLink="/password/recovery">
+				Forgot Your Password?
+			</a>
 			<span class="done">
 				<button mat-fab color="primary">
 					<mat-icon routerLink="/register">person_add</mat-icon>

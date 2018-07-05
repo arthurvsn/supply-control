@@ -26,7 +26,9 @@ import { SupplyComponent } from './supply/supply.component';
 import { DatePipe } from '@angular/common';
 import { AmountControlComponent } from './amount-control/amount-control.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
     SupplyComponent,
     AmountControlComponent,
     ConfirmationDialogComponent,
+    PasswordRecoveryComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,

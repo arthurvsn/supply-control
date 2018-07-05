@@ -33,18 +33,37 @@ export class UserService {
         return this.http.get<any>(`https://viacep.com.br/ws/${zipcode}/json/`);
     }
 
-    getAll() {
-        return this.http.get<any>(this.urlApi + 'user');
-    }
-
     validateToken(): any {
+
         if (!this.token) { 
             return; 
         }
+        
         return this.service.ping(this.token);
     }
 
+     changePassword(form: FormGroup): any {
+
+        let newUrl = 'password/change'
+        let body = {
+            email: form.get('email').value
+        };
+
+        return this.service.post(newUrl, body, '');
+    }
+
+    resetPassword(form: FormGroup, token: string): any {
+
+        let newUrl = 'password/reset/' + token;
+        let body = {
+            password: form.get('password').value
+        };
+
+        return this.service.post(newUrl, body, '');
+    }
+
     getUserLogged(): any {
+
         if (localStorage.getItem('currentUser')) {
             let user = JSON.parse(localStorage.getItem("currentUser"));
 
