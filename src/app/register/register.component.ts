@@ -34,7 +34,10 @@ export class RegisterComponent implements OnInit {
 	loading = false;
 	error = '';
 	errorAddress = '';
-
+	selectedFile: File = null;
+	name: string;
+	ourFile: File;
+	
 	get cpwd() {
 		return this.registerForm.get('confirmedPassword');
 	}
@@ -43,6 +46,10 @@ export class RegisterComponent implements OnInit {
 				private userService: UserService,
 				private helper: Helper) {	}
 	
+	get f() {
+		return this.registerForm.controls;
+	}
+
 	ngOnInit() {
 		this.registerForm = new FormGroup({
 			name: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
@@ -90,8 +97,36 @@ export class RegisterComponent implements OnInit {
 			});
 	}
 
-	get f() {
-		return this.registerForm.controls;
+	/**
+   * this is used to trigger the input
+   */
+	openInput() {
+		// your can use ElementRef for this later
+		document.getElementById("fileInput").click();
+	}
+
+	fileChange(files: File[]) {
+		if (files.length > 0) {
+			this.ourFile = files[0];
+		}
+	}
+
+
+	/**
+	* this is used to perform the actual upload
+	*/
+	upload() {
+		console.log('sending this to server', this.ourFile);
+	}
+
+
+	/**
+	 * 
+	 */
+	onFileChange(event: any){
+		console.log(event);
+		this.selectedFile = <File>event.target.files[0];
+		console.log(this.selectedFile);
 	}
 
 	seacrchAddress(zipcode: any) {		

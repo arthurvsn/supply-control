@@ -70,10 +70,21 @@ export class SupplyComponent implements OnInit {
 			.subscribe(
 				supply => {
 					this.helper.openSnackBar(supply.message.text, supply.message.type)
+					if (supply.message.type == "S") {
+						this.resetValuesForm();
+					}
 				}, error => {
 					this.helper.openSnackBar("Error to save new supply, why: " + error, "ERROR")
 					console.error(error)
 				}
 			);
+	}
+
+	private resetValuesForm(): void {
+		this.supplyForm.get('liters').setValue('');
+		this.supplyForm.get('amount').setValue('');
+		this.supplyForm.get('price').setValue('');
+		this.supplyForm.get('type').setValue('');
+		this.supplyForm.get('dateSupply').setValue('');
 	}
 }

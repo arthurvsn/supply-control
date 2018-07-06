@@ -15,6 +15,15 @@
 								</mat-panel-description>
 							</mat-expansion-panel-header>
 
+							<!-- <input name="file" type="file" class="" (change)="onFileChange($event)" /> -->
+							<button mat-raised-button (click)="openInput()">
+								Select File to Upload
+							</button>
+							
+							<input id="fileInput" hidden type="file" (change)="fileChange($event.target.files)">
+							
+							<button mat-button [disabled]="!ourFile" (click)="upload()">Upload</button>
+
 							<mat-form-field class="full-width">
 								<input matInput placeholder="Enter your name" formControlName="name" class="text-align" [ngClass]="{'is-invalid': submitted && f.name.errors}">
 								<span matSuffix>

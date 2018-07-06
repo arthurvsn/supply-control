@@ -16,7 +16,8 @@ export class AppComponent {
 	href: string;
 	returnUrl = '/';
 
-	constructor(private userService: UserService, 
+	constructor(
+		private userService: UserService, 
 		private router: Router) {	}
 	
 	ngOnInit() {
