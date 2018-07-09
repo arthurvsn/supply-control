@@ -97,36 +97,13 @@ export class RegisterComponent implements OnInit {
 			});
 	}
 
-	/**
-   * this is used to trigger the input
-   */
-	openInput() {
-		// your can use ElementRef for this later
-		document.getElementById("fileInput").click();
-	}
-
 	fileChange(files: File[]) {
+
 		if (files.length > 0) {
 			this.ourFile = files[0];
 		}
-	}
 
-
-	/**
-	* this is used to perform the actual upload
-	*/
-	upload() {
-		console.log('sending this to server', this.ourFile);
-	}
-
-
-	/**
-	 * 
-	 */
-	onFileChange(event: any){
-		console.log(event);
-		this.selectedFile = <File>event.target.files[0];
-		console.log(this.selectedFile);
+		return;
 	}
 
 	seacrchAddress(zipcode: any) {		

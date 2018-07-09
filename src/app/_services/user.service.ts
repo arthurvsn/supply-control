@@ -42,7 +42,7 @@ export class UserService {
         return this.service.ping(this.token);
     }
 
-     changePassword(form: FormGroup): any {
+    changePassword(form: FormGroup): any {
 
         let newUrl = 'password/change'
         let body = {
@@ -60,6 +60,14 @@ export class UserService {
         };
 
         return this.service.post(newUrl, body, '');
+    }
+
+    saveProfilePicture(id: number, formData: any): any {
+        
+        let newUrl = this.url + 'update/picture/' + id;
+
+        return this.service.post(newUrl, formData, this.token);
+    
     }
 
     getUserLogged(): any {

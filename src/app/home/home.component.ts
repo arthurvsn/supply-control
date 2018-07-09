@@ -14,6 +14,7 @@ import { Car } from "../_models/car";
 export class HomeComponent implements OnInit {
 
 	cars: Car[] = [];
+	picture = "https://material.angular.io/assets/img/examples/shiba1.jpg";
 	user: User;
 	isLogged: boolean;
 	/*ng g c new-component --module app*/
@@ -28,7 +29,12 @@ export class HomeComponent implements OnInit {
 	}
 	  
 	getUserLogged(): void {		
+		
 		this.user = this.userService.getUserLogged();
+		
+		if (this.user.profile_picture) {
+			this.picture = this.user.profile_picture;
+		}
 	}
 
 	getCars(): void {

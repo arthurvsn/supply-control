@@ -35,9 +35,11 @@ export class UserComponent implements OnInit {
 	userForm: FormGroup;
 	error = '';
 	errorAddress = '';
+	picture = "";
 	returnUrl = "/dashboard";
 	loading = false;
 	submitted = false;
+
 	get cpwd() {
 		return this.userForm.get('confirmedPassword');
 	}
@@ -64,6 +66,7 @@ export class UserComponent implements OnInit {
 			phone: new FormControl(null, [Validators.required]),
 		});
 	}
+
 	getUser() {
 		this.userService.getUser(this.user.id)
 			.subscribe(
@@ -73,8 +76,9 @@ export class UserComponent implements OnInit {
 						this.address = user.dataset.user.addresses[0],
 						this.phones = user.dataset.user.phones[0],
 						this.setUserForm(this.user2),
-						this.setAddressForm(this.address)
-						this.setPhonesForm(this.phones)
+						this.setAddressForm(this.address),
+						this.setPhonesForm(this.phones),
+						this.picture = user.dataset.user.profile_picture
 					} else {
 						this.error = user.message.text;
 					}
@@ -124,6 +128,36 @@ export class UserComponent implements OnInit {
 					}
 				)
 		}
+	}
+
+	/**
+   * this is used to trigger the input
+   */
+	openInput() {
+		// your can use ElementRef for this later		
+		document.getElementById("fileInput").click();
+	}
+
+	onFileChange(event: any) {
+		
+		const [file] = event.srcElement.files;
+		if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
+			this.helper.openSnackBar('Favor selecionar uma imagem que tenha o formato JPG ou PNG', 'OK');
+		} else {
+			const formData = new FormData();
+			formData.append('profile_picture', file);
+
+			this.userService.saveProfilePicture(this.user.id, formData)
+				.subscribe(
+					data => {
+						this.picture = data.dataset.picture.url;
+						this.helper.openSnackBar(data.message.text, data.message.type);
+					}, error => {
+						this.helper.openSnackBar(error.message, "Error");
+					}
+				)
+		}
+
 	}
 
 	seacrchAddress(zipcode: any) {

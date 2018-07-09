@@ -1,9 +1,17 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12">
+			<mat-card>
+				<mat-card-title>{{ user.name }} profile</mat-card-title>
+				<img class="picture" [src]="picture" />
+				<div class="input-wrapper">
+					<button mat-raised-button (click)="openInput()">Select File to Upload</button>
+					<input id="fileInput" hidden type="file" (change)="onFileChange($event)">
+				</div>
+			</mat-card>
+
 			<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-				<mat-card class="new-user-card">
-					<mat-card-title>{{ user.name }}'s profile</mat-card-title>
+				<mat-card class="new-user-card">					
 					<mat-accordion>
 						<mat-expansion-panel>
 							<mat-expansion-panel-header>
