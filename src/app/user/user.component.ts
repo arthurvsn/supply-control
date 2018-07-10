@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserService } from "../_services/user.service";
 import { Helper } from '../_helpers/helper';
-import { User } from "../_models/user";
+import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
 import { Phone } from "../_models/phone";
-
+import { User } from "../_models/user";
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -17,7 +16,6 @@ function passwordConfirming(c: AbstractControl): any {
 	if (!pwd || !cpwd) return;
 	if (pwd.value !== cpwd.value) {
 		return { invalid: true };
-
 	}
 }
 
@@ -26,14 +24,13 @@ function passwordConfirming(c: AbstractControl): any {
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
 
+export class UserComponent implements OnInit {
 	user: User;
 	user2: User;
 	address: Address;
 	phones: Phone;
 	userForm: FormGroup;
-	error = '';
 	errorAddress = '';
 	picture = "";
 	returnUrl = "/dashboard";
@@ -44,7 +41,10 @@ export class UserComponent implements OnInit {
 		return this.userForm.get('confirmedPassword');
 	}
 
-	constructor(private userService: UserService, private router: Router, private helper: Helper) { }
+	constructor(
+		private userService: UserService, 
+		private router: Router, 
+		private helper: Helper) { }
 
 	ngOnInit() {
 		this.user = this.userService.getUserLogged();
@@ -80,10 +80,12 @@ export class UserComponent implements OnInit {
 						this.setPhonesForm(this.phones),
 						this.picture = user.dataset.user.profile_picture
 					} else {
-						this.error = user.message.text;
+						this.helper.openSnackBar(user.message.text, user.message.type);
 					}
 				},
-				error => this.error = error
+				error => {
+					this.helper.openSnackBar(error.message, "ERROR");
+				}
 			);
 	}
 
@@ -108,8 +110,8 @@ export class UserComponent implements OnInit {
 						this.loading = false;
 					}
 				}, error => {
-					this.error = error,
-						this.loading = false
+					this.helper.openSnackBar(error.message, "ERROR");
+					this.loading = false
 				}
 			)
 	}

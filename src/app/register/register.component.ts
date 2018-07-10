@@ -3,9 +3,9 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
+import { Helper } from '../_helpers/helper';
 import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
-import { Helper } from '../_helpers/helper';
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit {
 	returnUrl = "/login";
 	submitted = false;
 	loading = false;
-	error = '';
 	errorAddress = '';
 	selectedFile: File = null;
 	name: string;
@@ -42,9 +41,10 @@ export class RegisterComponent implements OnInit {
 		return this.registerForm.get('confirmedPassword');
 	}
 
-	constructor(private router: Router,
-				private userService: UserService,
-				private helper: Helper) {	}
+	constructor(
+		private router: Router,
+		private userService: UserService,
+		private helper: Helper) {	}
 	
 	get f() {
 		return this.registerForm.controls;
@@ -91,8 +91,7 @@ export class RegisterComponent implements OnInit {
 					}
 				},
 				error => {
-					this.error = error.message;
-					this.error = "Error on register";
+					this.helper.openSnackBar(error.message, "ERROR");
 					this.loading = false;
 			});
 	}

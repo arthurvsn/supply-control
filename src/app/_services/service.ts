@@ -40,7 +40,7 @@ export class Service {
         return this.http.get<any>(newUrl, options)
             .pipe(
                 tap(_ => this.log(`GET url = ${ newUrl }`)),
-                catchError(this.handleError<any>(`getSupply url=${ newUrl }`))
+                catchError(this.handleError<any>(`Error GET url=${ newUrl }`))
             );
         
     }
@@ -78,7 +78,7 @@ export class Service {
         return this.http.delete(newUrl, options)
             .pipe(
                 tap(_ => this.log(`DELETE url' = ${ newUrl }`)),
-                catchError(this.handleError<any>(`Error PUT url = ${ newUrl }`))
+                catchError(this.handleError<any>(`Error DELETE url = ${ newUrl }`))
             );
     }
 
