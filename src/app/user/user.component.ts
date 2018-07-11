@@ -32,7 +32,7 @@ export class UserComponent implements OnInit {
 	phones: Phone;
 	userForm: FormGroup;
 	errorAddress = '';
-	picture = "";
+	picture = "assets/images/flat-avatar.png";
 	returnUrl = "/dashboard";
 	loading = false;
 	submitted = false;

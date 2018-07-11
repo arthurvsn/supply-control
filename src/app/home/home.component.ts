@@ -15,7 +15,8 @@ import { Helper } from '../_helpers/helper';
 export class HomeComponent implements OnInit {
 
 	cars: Car[] = [];
-	picture = "https://material.angular.io/assets/img/examples/shiba1.jpg";
+	//picture = "https://material.angular.io/assets/img/examples/shiba1.jpg";
+	picture = "assets/images/flat-avatar.png";
 	user: User;
 	isLogged: boolean;
 	/*ng g c new-component --module app*/
