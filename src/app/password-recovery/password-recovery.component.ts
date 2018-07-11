@@ -29,7 +29,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
 	onSubmit() {
 		this.submitted = true;
-
+		this.loading = true;
 		this.userService.changePassword(this.recoveryForm)
 			.subscribe(
 				data => {
@@ -37,8 +37,10 @@ export class PasswordRecoveryComponent implements OnInit {
 					if (data.message.type == "S") {
 						this.router.navigate(['/login']);
 					}
+					this.loading = false;
 				}, error => {
 					this.helper.openSnackBar(error.message, "ERROR");
+					this.loading = false;
 				}
 			);
 	}

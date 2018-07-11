@@ -29,6 +29,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { MatDialogModule } from '@angular/material';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { Error404Component } from './error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     ConfirmationDialogComponent,
     PasswordRecoveryComponent,
     PasswordResetComponent,
+    Error404Component,
   ],
   imports: [
     BrowserModule,

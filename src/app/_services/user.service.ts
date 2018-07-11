@@ -12,6 +12,7 @@ import 'rxjs/RX';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
 import { User } from '../_models/user';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Injectable()
 
@@ -25,7 +26,8 @@ export class UserService {
     
     constructor(private http: HttpClient,
                 private authenticationService: AuthenticationService,
-                private service: Service) {
+                private service: Service,
+                private router: Router) {
         this.token = this.authenticationService.getToken();
     }
 
@@ -36,9 +38,9 @@ export class UserService {
     validateToken(): any {
 
         if (!this.token) { 
-            return; 
+            return false;
         }
-        
+
         return this.service.ping(this.token);
     }
 

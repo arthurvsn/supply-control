@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { CarService } from '../_services/car.service';
 import { User } from '../_models/user';
 import { Car } from "../_models/car";
+import { Helper } from '../_helpers/helper';
 
 @Component({
   selector: 'app-home',
@@ -21,13 +22,14 @@ export class HomeComponent implements OnInit {
 	constructor(
 		private userService: UserService, 
 		private carService: CarService,
-		private router: Router) {  }
+		private router: Router,
+		private helper: Helper) {  }
 	
   	ngOnInit() {
 		this.getUserLogged();
 		this.getCars();
 	}
-	  
+
 	getUserLogged(): void {		
 		
 		this.user = this.userService.getUserLogged();
@@ -46,6 +48,7 @@ export class HomeComponent implements OnInit {
 					}
 				}, error => {
 					console.error(error)
+					this.helper.openSnackBar(error.message, "ERROR")
 				}
 			);
 	}
