@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Helper } from '../_helpers/helper';
 import { UserService } from "../_services/user.service";
@@ -17,6 +18,11 @@ function passwordConfirming(c: AbstractControl): any {
 	if (pwd.value !== cpwd.value) {
 		return { invalid: true };
 	}
+}
+
+export interface DialogData {
+	animal: string;
+	name: string;
 }
 
 @Component({
@@ -44,7 +50,8 @@ export class UserComponent implements OnInit {
 	constructor(
 		private userService: UserService, 
 		private router: Router, 
-		private helper: Helper) { }
+		private helper: Helper,
+		public dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.user = this.userService.getUserLogged();
@@ -117,19 +124,17 @@ export class UserComponent implements OnInit {
 	}
 
 	deletProfile() {
-		if (confirm("Are you sure to delete your profile?")) {
-			this.userService.deleteUser(this.user.id)
-				.subscribe(
-					data => {
-						this.helper.openSnackBar(data.message.text, data.message.type);
-						if(data.message.type == "S") {
-							this.router.navigate(['/login']);
-						}
-					}, error => {
-						this.helper.openSnackBar(error, "ERROR");
+		this.userService.deleteUser(this.user.id)
+			.subscribe(
+				data => {
+					this.helper.openSnackBar(data.message.text, data.message.type);
+					if(data.message.type == "S") {
+						this.router.navigate(['/login']);
 					}
-				)
-		}
+				}, error => {
+					this.helper.openSnackBar(error, "ERROR");
+				}
+			)
 	}
 
 	/**
@@ -200,6 +205,35 @@ export class UserComponent implements OnInit {
 	private setPhonesForm(phone: Phone) {
 		this.userForm.get('code').setValue(phone.country_code);
 		this.userForm.get('phone').setValue(phone.number);
+	}
+
+	openDialog(): void {
+		const dialogRef = this.dialog.open(DialogUserOverview, {
+			width: '250px',
+			data: { name: this.user.name, response: "yes" }
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			if(result == "yes") {
+				this.deletProfile();
+			}
+		});
+	}
+
+}
+
+@Component({
+	selector: 'dialog-user-component-dialog',
+	templateUrl: 'dialog.user.component.html',
+})
+export class DialogUserOverview {
+
+	constructor(
+		private dialogRef: MatDialogRef<DialogUserOverview>,
+		@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+	onNoClick(): void {
+		this.dialogRef.close();
 	}
 
 }

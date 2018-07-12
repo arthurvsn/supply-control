@@ -13,7 +13,10 @@ export class SupplyService {
 	token: string;
 	url = "supply"
 
-	constructor(private service: Service, authenticationService: AuthenticationService, private datePipe: DatePipe) {
+	constructor(
+		private service: Service, 
+		authenticationService: AuthenticationService, 
+		private datePipe: DatePipe) {
 		this.token = authenticationService.getToken();
 	}
 

@@ -35,6 +35,9 @@ export class HomeComponent implements OnInit {
 		
 		this.user = this.userService.getUserLogged();
 		
+		if(!this.user) {
+			this.router.navigate(['/login']);
+		}
 		if (this.user.profile_picture) {
 			this.picture = this.user.profile_picture;
 		}

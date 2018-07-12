@@ -13,6 +13,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
 import { User } from '../_models/user';
 import { Router } from '../../../node_modules/@angular/router';
+import { Helper } from '../_helpers/helper';
 
 @Injectable()
 
@@ -27,7 +28,8 @@ export class UserService {
     constructor(private http: HttpClient,
                 private authenticationService: AuthenticationService,
                 private service: Service,
-                private router: Router) {
+                private router: Router,
+                private helper: Helper) {
         this.token = this.authenticationService.getToken();
     }
 
@@ -76,10 +78,15 @@ export class UserService {
 
         if (localStorage.getItem('currentUser')) {
             let user = JSON.parse(localStorage.getItem("currentUser"));
-
-            this.user = user.user;
-
-            return this.user;
+            
+            let token = !this.helper.isTokenExpired(user.token) ? user.token : "";
+            
+            if(token) {
+                this.user = user.user;
+                return this.user;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

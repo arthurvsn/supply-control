@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Helper } from '../_helpers/helper';
@@ -24,6 +24,7 @@ export class CarDetailComponent implements OnInit {
 		private location: Location,
 		private carService: CarService,
 		private helper: Helper,
+		private router: Router, 
 	) { }
 
 	ngOnInit() {
@@ -46,6 +47,7 @@ export class CarDetailComponent implements OnInit {
 						this.errorCar = false;
 					} else {						
 						this.helper.openSnackBar(data.message.text, data.message.type);
+						this.router.navigate(['**/car/detail/'+id]);
 					}
 				}, error => {
 					console.error(error),
