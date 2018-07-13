@@ -10,3 +10,14 @@
 .new-user-card {
   max-width: 4000px;
 }
+
+.picture-wrapper {
+  height: 100px;
+  margin-bottom: 20px;
+  position: relative;
+  width: 100px;
+}
+.picture {
+  height: 100px;
+  width: 100px;
+}

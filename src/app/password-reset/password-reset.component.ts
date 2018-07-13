@@ -48,6 +48,11 @@ export class PasswordResetComponent implements OnInit {
 	onSubmit() {
 		this.submitted = true;
 		
+		if (this.resetForm.invalid) {
+			this.helper.openSnackBar("Password do not match!", "ERROR");
+			return;
+		}
+		this.loading = true;
 		let token = this.route.snapshot.paramMap.get('token');
 
 		this.userService.resetPassword(this.resetForm, token)		
@@ -57,7 +62,9 @@ export class PasswordResetComponent implements OnInit {
 					if (data.message.type == "S") {
 						this.router.navigate(['/login']);
 					}
+					this.loading = false;
 				}, error => {
+					this.loading = false;
 					this.helper.openSnackBar(error.message, "ERROR");
 				}
 		);

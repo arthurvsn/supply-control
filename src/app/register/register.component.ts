@@ -3,9 +3,9 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
+import { Helper } from '../_helpers/helper';
 import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
-import { Helper } from '../_helpers/helper';
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -32,17 +32,24 @@ export class RegisterComponent implements OnInit {
 	returnUrl = "/login";
 	submitted = false;
 	loading = false;
-	error = '';
 	errorAddress = '';
-
+	selectedFile: File = null;
+	name: string;
+	ourFile: File;
+	
 	get cpwd() {
 		return this.registerForm.get('confirmedPassword');
 	}
 
-	constructor(private router: Router,
-				private userService: UserService,
-				private helper: Helper) {	}
+	constructor(
+		private router: Router,
+		private userService: UserService,
+		private helper: Helper) {	}
 	
+	get f() {
+		return this.registerForm.controls;
+	}
+
 	ngOnInit() {
 		this.registerForm = new FormGroup({
 			name: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
@@ -84,14 +91,18 @@ export class RegisterComponent implements OnInit {
 					}
 				},
 				error => {
-					this.error = error.message;
-					this.error = "Error on register";
+					this.helper.openSnackBar(error.message, "ERROR");
 					this.loading = false;
 			});
 	}
 
-	get f() {
-		return this.registerForm.controls;
+	fileChange(files: File[]) {
+
+		if (files.length > 0) {
+			this.ourFile = files[0];
+		}
+
+		return;
 	}
 
 	seacrchAddress(zipcode: any) {		

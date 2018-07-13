@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { SupplyService } from '../_services/supply.service';
 import { Helper } from '../_helpers/helper';
+import { SupplyService } from '../_services/supply.service';
 
 @Component({
   selector: 'app-supply',
@@ -14,11 +14,13 @@ export class SupplyComponent implements OnInit {
 
 	supplyForm: FormGroup;
 	message = '';
-	error = '';
 	date = new Date();
 	loading = false;
 
-	constructor(private route: ActivatedRoute, private supplyService: SupplyService, private helper: Helper) { }
+	constructor(
+		private route: ActivatedRoute, 
+		private supplyService: SupplyService, 
+		private helper: Helper) { }
 
 	ngOnInit() {
 		this.supplyForm = new FormGroup({
@@ -70,10 +72,21 @@ export class SupplyComponent implements OnInit {
 			.subscribe(
 				supply => {
 					this.helper.openSnackBar(supply.message.text, supply.message.type)
+					if (supply.message.type == "S") {
+						this.resetValuesForm();
+					}
 				}, error => {
 					this.helper.openSnackBar("Error to save new supply, why: " + error, "ERROR")
 					console.error(error)
 				}
 			);
+	}
+
+	private resetValuesForm(): void {
+		this.supplyForm.get('liters').setValue('');
+		this.supplyForm.get('amount').setValue('');
+		this.supplyForm.get('price').setValue('');
+		this.supplyForm.get('type').setValue('');
+		this.supplyForm.get('dateSupply').setValue('');
 	}
 }

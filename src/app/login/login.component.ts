@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthenticationService } from "../_services/authentication.service";
 import { Helper } from '../_helpers/helper';
+import { AuthenticationService } from "../_services/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -17,12 +17,12 @@ export class LoginComponent implements OnInit {
 	loading = false;
 	submitted = false;
 	returnUrl: string;
-	error = '';
 
-	constructor(private route: ActivatedRoute,
-				private router: Router,
-				private authenticationService: AuthenticationService,
-				private helper: Helper) { }
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private authenticationService: AuthenticationService,
+		private helper: Helper) { }
 
 	ngOnInit() {
 		this.loginForm = new FormGroup({
@@ -59,12 +59,12 @@ export class LoginComponent implements OnInit {
 						this.router.navigate([this.returnUrl]);
 						window.location.reload();
 					} else {
-						this.error = data;
+						this.helper.openSnackBar(data, "ERROR");
 						this.loading = false;
 					}
 				},
 				error => {
-					this.error = error;
+					this.helper.openSnackBar(error, "ERROR");
 					this.loading = false;
 		});
 	}

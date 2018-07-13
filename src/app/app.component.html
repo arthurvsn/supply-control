@@ -55,16 +55,16 @@
 	
 	<mat-menu x-position="before" #menu="matMenu">
 		<div *ngIf="!isLogged; else logged">
-			<button mat-menu-item routerLink="/login">Login</button>
-			<button mat-menu-item routerLink="/register">Register</button>
+			<button mat-menu-item [routerLink]="['/login']">Login</button>
+			<button mat-menu-item [routerLink]="['/register']">Register</button>
 		</div>
 		<ng-template #logged>
-			<button mat-menu-item routerLink="/dashboard">Dashboard</button>
-			<button mat-menu-item routerLink="/profile">Profile</button>
+			<button mat-menu-item [routerLink]="['/dashboard']">Dashboard</button>
+			<button mat-menu-item [routerLink]="['/profile']">Profile</button>
 			<button mat-menu-item (click)="logout()">Logout</button>
 		</ng-template>
-		<button mat-menu-item routerLink="/about">About</button>
-		<button mat-menu-item routerLink="/contact">Contact</button>
+		<button mat-menu-item [routerLink]="['/about']">About</button>
+		<button mat-menu-item [routerLink]="['/contact']">Contact</button>
 	</mat-menu>
 	
 </div>

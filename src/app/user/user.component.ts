@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { UserService } from "../_services/user.service";
 import { Helper } from '../_helpers/helper';
-import { User } from "../_models/user";
+import { UserService } from "../_services/user.service";
 import { Address } from "../_models/address";
 import { Phone } from "../_models/phone";
-
+import { User } from "../_models/user";
 
 function passwordConfirming(c: AbstractControl): any {
 	if (!c.parent || !c) return;
@@ -17,8 +17,12 @@ function passwordConfirming(c: AbstractControl): any {
 	if (!pwd || !cpwd) return;
 	if (pwd.value !== cpwd.value) {
 		return { invalid: true };
-
 	}
+}
+
+export interface DialogData {
+	animal: string;
+	name: string;
 }
 
 @Component({
@@ -26,23 +30,28 @@ function passwordConfirming(c: AbstractControl): any {
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
 
+export class UserComponent implements OnInit {
 	user: User;
 	user2: User;
 	address: Address;
 	phones: Phone;
 	userForm: FormGroup;
-	error = '';
 	errorAddress = '';
+	picture = "assets/images/flat-avatar.png";
 	returnUrl = "/dashboard";
 	loading = false;
 	submitted = false;
+
 	get cpwd() {
 		return this.userForm.get('confirmedPassword');
 	}
 
-	constructor(private userService: UserService, private router: Router, private helper: Helper) { }
+	constructor(
+		private userService: UserService, 
+		private router: Router, 
+		private helper: Helper,
+		public dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.user = this.userService.getUserLogged();
@@ -64,6 +73,7 @@ export class UserComponent implements OnInit {
 			phone: new FormControl(null, [Validators.required]),
 		});
 	}
+
 	getUser() {
 		this.userService.getUser(this.user.id)
 			.subscribe(
@@ -73,13 +83,16 @@ export class UserComponent implements OnInit {
 						this.address = user.dataset.user.addresses[0],
 						this.phones = user.dataset.user.phones[0],
 						this.setUserForm(this.user2),
-						this.setAddressForm(this.address)
-						this.setPhonesForm(this.phones)
+						this.setAddressForm(this.address),
+						this.setPhonesForm(this.phones),
+						this.picture = user.dataset.user.profile_picture
 					} else {
-						this.error = user.message.text;
+						this.helper.openSnackBar(user.message.text, user.message.type);
 					}
 				},
-				error => this.error = error
+				error => {
+					this.helper.openSnackBar(error.message, "ERROR");
+				}
 			);
 	}
 
@@ -104,26 +117,54 @@ export class UserComponent implements OnInit {
 						this.loading = false;
 					}
 				}, error => {
-					this.error = error,
-						this.loading = false
+					this.helper.openSnackBar(error.message, "ERROR");
+					this.loading = false
 				}
 			)
 	}
 
 	deletProfile() {
-		if (confirm("Are you sure to delete your profile?")) {
-			this.userService.deleteUser(this.user.id)
+		this.userService.deleteUser(this.user.id)
+			.subscribe(
+				data => {
+					this.helper.openSnackBar(data.message.text, data.message.type);
+					if(data.message.type == "S") {
+						this.router.navigate(['/login']);
+					}
+				}, error => {
+					this.helper.openSnackBar(error, "ERROR");
+				}
+			)
+	}
+
+	/**
+   * this is used to trigger the input
+   */
+	openInput() {
+		// your can use ElementRef for this later		
+		document.getElementById("fileInput").click();
+	}
+
+	onFileChange(event: any) {
+		
+		const [file] = event.srcElement.files;
+		if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
+			this.helper.openSnackBar('Favor selecionar uma imagem que tenha o formato JPG ou PNG', 'OK');
+		} else {
+			const formData = new FormData();
+			formData.append('profile_picture', file);
+
+			this.userService.saveProfilePicture(this.user.id, formData)
 				.subscribe(
 					data => {
+						this.picture = data.dataset.picture.url;
 						this.helper.openSnackBar(data.message.text, data.message.type);
-						if(data.message.type == "S") {
-							this.router.navigate(['/login']);
-						}
 					}, error => {
-						this.helper.openSnackBar(error, "ERROR");
+						this.helper.openSnackBar(error.message, "Error");
 					}
 				)
 		}
+
 	}
 
 	seacrchAddress(zipcode: any) {
@@ -164,6 +205,35 @@ export class UserComponent implements OnInit {
 	private setPhonesForm(phone: Phone) {
 		this.userForm.get('code').setValue(phone.country_code);
 		this.userForm.get('phone').setValue(phone.number);
+	}
+
+	openDialog(): void {
+		const dialogRef = this.dialog.open(DialogUserOverview, {
+			width: '250px',
+			data: { name: this.user.name, response: "yes" }
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			if(result == "yes") {
+				this.deletProfile();
+			}
+		});
+	}
+
+}
+
+@Component({
+	selector: 'dialog-user-component-dialog',
+	templateUrl: 'dialog.user.component.html',
+})
+export class DialogUserOverview {
+
+	constructor(
+		private dialogRef: MatDialogRef<DialogUserOverview>,
+		@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+	onNoClick(): void {
+		this.dialogRef.close();
 	}
 
 }

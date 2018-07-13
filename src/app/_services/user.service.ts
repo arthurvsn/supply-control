@@ -12,6 +12,8 @@ import 'rxjs/RX';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Service } from '../_services/service';
 import { User } from '../_models/user';
+import { Router } from '../../../node_modules/@angular/router';
+import { Helper } from '../_helpers/helper';
 
 @Injectable()
 
@@ -25,7 +27,9 @@ export class UserService {
     
     constructor(private http: HttpClient,
                 private authenticationService: AuthenticationService,
-                private service: Service) {
+                private service: Service,
+                private router: Router,
+                private helper: Helper) {
         this.token = this.authenticationService.getToken();
     }
 
@@ -36,13 +40,13 @@ export class UserService {
     validateToken(): any {
 
         if (!this.token) { 
-            return; 
+            return false;
         }
-        
+
         return this.service.ping(this.token);
     }
 
-     changePassword(form: FormGroup): any {
+    changePassword(form: FormGroup): any {
 
         let newUrl = 'password/change'
         let body = {
@@ -62,14 +66,27 @@ export class UserService {
         return this.service.post(newUrl, body, '');
     }
 
+    saveProfilePicture(id: number, formData: any): any {
+        
+        let newUrl = this.url + 'update/picture/' + id;
+
+        return this.service.post(newUrl, formData, this.token);
+    
+    }
+
     getUserLogged(): any {
 
         if (localStorage.getItem('currentUser')) {
             let user = JSON.parse(localStorage.getItem("currentUser"));
-
-            this.user = user.user;
-
-            return this.user;
+            
+            let token = !this.helper.isTokenExpired(user.token) ? user.token : "";
+            
+            if(token) {
+                this.user = user.user;
+                return this.user;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

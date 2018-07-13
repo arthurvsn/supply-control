@@ -16,9 +16,12 @@ export class AmountControlComponent implements OnInit {
 	dateStart = new Date();
 	dateEnd = new Date();
 	amount = 0.00;
-	error = "";
+	loading = false;
 	
-	constructor(private supplyService: SupplyService, private helper: Helper, private route: ActivatedRoute) { }
+	constructor(
+		private supplyService: SupplyService, 
+		private helper: Helper, 
+		private route: ActivatedRoute) { }
 
 	ngOnInit() {		
 		this.amountForm = new FormGroup({
@@ -29,6 +32,7 @@ export class AmountControlComponent implements OnInit {
 	}
 
 	filterExpenses() {
+		this.loading = true;
 		let dateSupplyStart = this.helper.formatDate(this.amountForm.get('dateSupplyStart').value);
 		let dateSupplyEnd = this.helper.formatDate(this.amountForm.get('dateSupplyEnd').value);
 
@@ -46,8 +50,10 @@ export class AmountControlComponent implements OnInit {
 					} else {
 						this.amountForm.get('amount').setValue(0.00);
 					}
+					this.loading = false;
 				}, error => {
-					this.error = error.message;
+					this.helper.openSnackBar(error.message, "ERROR");
+					this.loading = false;
 				}
 			);
 	}

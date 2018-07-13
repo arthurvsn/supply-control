@@ -5,24 +5,26 @@ import 'hammerjs';
 import { UserService } from './_services/user.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
 export class AppComponent {
 
 	title = 'Supply Control';
 	isLogged: any;
-	href: string;
 	returnUrl = '/';
+	href: string;
 
-	constructor(private userService: UserService, 
-		private router: Router) {	}
-	
+	constructor(
+		private userService: UserService,
+		private router: Router) { }
+
 	ngOnInit() {
-		this.href = window.location.href;
-		
-		if(!this.href.match('/password/reset')) {
+		/* this.href = window.location.href;
+
+		if (!this.href.match('/password/reset')) {
+
 			if (this.userService.getUserLogged()) {
 				this.userService.validateToken()
 					.subscribe(
@@ -47,6 +49,14 @@ export class AppComponent {
 				this.returnUrl = '/login';
 			}
 			this.router.navigate([this.returnUrl]);
+		} */
+
+		
+
+		if (this.userService.getUserLogged()) {
+			this.isLogged = true;
+		} else {
+			this.isLogged = false;
 		}
 	}
 

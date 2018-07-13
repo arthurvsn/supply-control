@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Car } from '../_models/car';
+import { Helper } from '../_helpers/helper';
 import { CarService } from '../_services/car.service';
+import { Car } from '../_models/car';
 
 @Component({
   selector: 'app-car-detail',
@@ -17,12 +18,13 @@ export class CarDetailComponent implements OnInit {
 	errorCar = true;
 	model = '';
 	manufacturer = '';
-	error = '';
 	
 	constructor(
 		private route: ActivatedRoute,
 		private location: Location,
-		private carService: CarService
+		private carService: CarService,
+		private helper: Helper,
+		private router: Router, 
 	) { }
 
 	ngOnInit() {
@@ -42,13 +44,14 @@ export class CarDetailComponent implements OnInit {
 						this.car = data.dataset.car;
 						this.model = this.car.model;
 						this.manufacturer = this.car.manufacturer;
-							this.errorCar = false;
-					} else {
-						this.error = data.message.text;
+						this.errorCar = false;
+					} else {						
+						this.helper.openSnackBar(data.message.text, data.message.type);
+						this.router.navigate(['**/car/detail/'+id]);
 					}
 				}, error => {
 					console.error(error),
-					this.error = error
+					this.helper.openSnackBar(error.message, "ERROR");
 				}
 			);
 	}

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Helper } from '../_helpers/helper';
 import { CarService } from '../_services/car.service';
 import { UserService } from '../_services/user.service';
 import { Car } from "../_models/car";
 import { User } from '../_models/user';
-import { Helper } from '../_helpers/helper';
 
 @Component({
   selector: 'app-car',
@@ -18,11 +18,11 @@ export class CarComponent implements OnInit {
 	user: User;
 	car: Car;
 	carForm: FormGroup;
-	error = '';
 	submitted = false;
 	loading = false;
 
-	constructor(private carService: CarService, 
+	constructor(
+		private carService: CarService, 
 		private userService: UserService, 
 		private router: Router,
 		private helper: Helper) { }
@@ -62,7 +62,7 @@ export class CarComponent implements OnInit {
 					}
 				}, error => {
 					console.error(error);	
-					this.error = error;
+					this.helper.openSnackBar(error.message, "ERROR");
 				}
 			);
 	}
