@@ -69,7 +69,7 @@ export class UserService {
     saveProfilePicture(id: number, formData: any): any {
         
         let newUrl = this.url + 'update/picture/' + id;
-
+        
         return this.service.post(newUrl, formData, this.token);
     
     }

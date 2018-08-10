@@ -21,38 +21,6 @@ export class AppComponent {
 		private router: Router) { }
 
 	ngOnInit() {
-		/* this.href = window.location.href;
-
-		if (!this.href.match('/password/reset')) {
-
-			if (this.userService.getUserLogged()) {
-				this.userService.validateToken()
-					.subscribe(
-						ping => {
-							if (ping.message.type == "S") {
-								this.isLogged = true;
-								this.returnUrl = '/dashboard';
-								this.router.navigate([this.returnUrl]);
-							} else {
-								this.isLogged = false;
-								this.returnUrl = '/login';
-								this.router.navigate([this.returnUrl]);
-							}
-						}, error => {
-							console.error(error);
-							this.returnUrl = '/login';
-							this.router.navigate([this.returnUrl]);
-						}
-					);
-			} else {
-				this.isLogged = false;
-				this.returnUrl = '/login';
-			}
-			this.router.navigate([this.returnUrl]);
-		} */
-
-		
-
 		if (this.userService.getUserLogged()) {
 			this.isLogged = true;
 		} else {

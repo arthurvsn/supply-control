@@ -16,24 +16,24 @@ import { AuthGuard } from './_guards/auth.guard';
 import { Error404Component } from './error404/error404.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'logout', component: LoginComponent },
-  { path: 'profile', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'car', component: CarComponent, canActivate: [AuthGuard] },
-  { path: 'car/detail/:id', component: CarDetailComponent, canActivate: [AuthGuard] },
-  { path: 'password/recovery', component: PasswordRecoveryComponent },
-  { path: 'password/reset/:token', component: PasswordResetComponent },
-  { path: '**', component: Error404Component },
+	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+	{ path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
+	{ path: 'login', component: LoginComponent },
+	{ path: 'register', component: RegisterComponent },
+	{ path: 'about', component: AboutComponent },
+	{ path: 'contact', component: ContactComponent },
+	{ path: 'logout', component: LoginComponent },
+	{ path: 'profile', component: UserComponent, canActivate: [AuthGuard] },
+	{ path: 'car', component: CarComponent, canActivate: [AuthGuard] },
+	{ path: 'car/detail/:id', component: CarDetailComponent, canActivate: [AuthGuard] },
+	{ path: 'password/recovery', component: PasswordRecoveryComponent },
+	{ path: 'password/reset/:token', component: PasswordResetComponent },
+	{ path: '**', component: Error404Component },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }), CommonModule],
-  exports: [RouterModule],
-  declarations: []
+	imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }), CommonModule],
+	exports: [RouterModule],
+	declarations: []
 })
 export class AppRoutingModule { }
