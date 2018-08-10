@@ -91,7 +91,7 @@ export class Service {
     }
 
     private log(message: string) {
-        console.clear();
+        
         console.log('Service: ' + message);
     }
 
