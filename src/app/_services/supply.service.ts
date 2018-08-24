@@ -34,6 +34,13 @@ export class SupplyService {
 		return this.service.get(newUrl, this.token);
 	}
 
+	getTypeFuels() {
+		
+		let newUrl = 'type-fuel';
+
+		return this.service.get(newUrl, this.token);
+	}
+
 	private bodyNewSupply(form: FormGroup, carID: number) {
 
 		let body = {

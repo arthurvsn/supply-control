@@ -145,7 +145,7 @@ export class UserService {
             name: form.get('name').value,
             username: form.get('username').value,
             email: form.get('email').value,
-            profile_picture: "teste",
+            profile_picture: "https://material.angular.io/assets/img/examples/shiba1.jpg",
             password: form.get('password').value,
             addresses: [
                 objAdress
