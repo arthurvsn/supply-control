@@ -40,22 +40,23 @@ export class AmountControlComponent implements OnInit {
 			this.helper.openSnackBar("Final date greater than initial date", "False");
 			return;
 		}
+
 		let carID = +this.route.snapshot.paramMap.get('id');
 		
 		this.supplyService.getAmountSupply(dateSupplyStart, dateSupplyEnd, carID)
-			.subscribe(
-				data => {
-					if (data.dataset.supply.valueAmount > 0) {
-						this.amountForm.get('amount').setValue(data.dataset.supply.valueAmount);
-					} else {
-						this.amountForm.get('amount').setValue(0.00);
-					}
-					this.loading = false;
-				}, error => {
-					this.helper.openSnackBar(error.message, "ERROR");
-					this.loading = false;
+		.subscribe(
+			data => {
+				if (data.dataset.supply.valueAmount > 0) {
+					this.amountForm.get('amount').setValue(data.dataset.supply.valueAmount);
+				} else {
+					this.amountForm.get('amount').setValue(0.00);
 				}
-			);
+				this.loading = false;
+			}, error => {
+				this.helper.openSnackBar(error.message, "ERROR");
+				this.loading = false;
+			}
+		);
 	}
 
 }
