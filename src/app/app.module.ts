@@ -31,6 +31,7 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { Error404Component } from './error404/error404.component';
 import { DialogUserOverview } from "./user/user.component";
+import { CompareSupplyComponent } from './compare-supply/compare-supply.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { DialogUserOverview } from "./user/user.component";
     PasswordResetComponent,
     Error404Component,
     DialogUserOverview,
+    CompareSupplyComponent,
   ],
   entryComponents: [DialogUserOverview],
   imports: [

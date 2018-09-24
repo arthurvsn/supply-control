@@ -45,10 +45,6 @@ export class SupplyComponent implements OnInit {
 
 	insertValueAuto(liters, amount, price) {
 
-		/* if (liters != "" || amount != "" || price != "") {
-			return;
-		} */
-
 		let valueCalc = 0.00;
 
 		if (liters == "" && amount != "" && price != "") {
